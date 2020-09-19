@@ -33,7 +33,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Relevamiento visual')),
+      appBar: AppBar(
+          title: Text('Relevamiento visual',
+              style: TextStyle(color: Colors.white))),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
@@ -116,8 +118,13 @@ class _LoginPageState extends State<LoginPage> {
                             else //f7e044  69fed8
                               {print("Invalid form")}
                           },
-                      child: Text("Login",
-                          style: kTitlesTextStyle.copyWith(fontSize: 20)),
+                      child: BorderedText(
+                        strokeWidth: 4.0,
+                        strokeColor: Colors.black54,
+                        child: Text("Login",
+                            style: kTitlesTextStyle.copyWith(
+                                fontSize: 20, letterSpacing: 2.0)),
+                      ),
                       color: ThemeData.dark().accentColor)
                 ],
               ),

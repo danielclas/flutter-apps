@@ -14,7 +14,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Relevamiento visual')),
+        appBar: AppBar(
+            title: Text('Relevamiento visual',
+                style: TextStyle(color: Colors.white))),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
