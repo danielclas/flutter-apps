@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relevamiento_visual_app/constants.dart';
+import 'package:camera/camera.dart';
 
 class CameraComponent extends StatefulWidget {
   @override
@@ -9,12 +10,31 @@ class CameraComponent extends StatefulWidget {
 }
 
 class _CameraComponentState extends State<CameraComponent> {
+  CameraController frontCamera;
+  CameraController backCamera;
+  Future<void> _initializeControllerFuture;
+
+  void initCameras() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final cameras = await availableCameras();
+
+    backCamera = CameraController(cameras[0], ResolutionPreset.medium);
+    frontCamera = CameraController(cameras[1], ResolutionPreset.medium);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initCameras();
+    _initializeControllerFuture = backCamera.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text('Relevamiento visual',
-              style: TextStyle(color: Colors.white))),
+              style: TextStyle(color: Colors.white, fontFamily: 'Orbitron'))),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
@@ -42,5 +62,11 @@ class _CameraComponentState extends State<CameraComponent> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    backCamera.dispose();
+    super.dispose();
   }
 }

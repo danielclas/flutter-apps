@@ -1,12 +1,10 @@
 import 'dart:math';
-
+import './services/login_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:relevamiento_visual_app/constants.dart';
-import 'package:relevamiento_visual_app/services/login_service.dart';
 import 'home_page.dart';
-import 'package:bordered_text/bordered_text.dart';
+import 'package:unicorndial/unicorndial.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +12,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //TEST
+
+  Widget profileOption({IconData iconData, Function onPressed}) {
+    return UnicornButton(
+        currentButton: FloatingActionButton(
+      backgroundColor: Colors.grey[500],
+      mini: true,
+      child: Icon(iconData),
+      onPressed: onPressed,
+    ));
+  }
+
+  List<UnicornButton> getProfileMenu() {
+    List<UnicornButton> children = [];
+
+    children
+        .add(profileOption(iconData: Icons.account_balance, onPressed: () {}));
+    children.add(profileOption(iconData: Icons.settings, onPressed: () {}));
+    children.add(profileOption(
+        iconData: Icons.subdirectory_arrow_left, onPressed: () {}));
+
+    return children;
+  }
+
+  //TEST
   String email;
   String password;
   final _loginForm = GlobalKey<FormState>();
@@ -30,12 +53,48 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /*UnicornDialer(
+  parentButtonBackground: Colors.grey[700],
+  orientation: UnicornOrientation.HORIZONTAL,
+  parentButton: Icon(Icons.person),
+  childButtons: getProfileMenu(),
+  ),*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Stack(
+        children: <Widget>[
+          Positioned(
+            bottom: 80.0,
+            right: 10.0,
+            child: FloatingActionButton(
+              heroTag: 'save',
+              onPressed: () {
+                // What you want to do
+              },
+              child: Icon(Icons.save),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 10.0,
+            right: 10.0,
+            child: FloatingActionButton(
+              heroTag: 'close',
+              onPressed: () {},
+              child: Icon(Icons.close),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0.0),
+              ),
+            ),
+          ),
+        ],
+      ),
       appBar: AppBar(
           title: Text('Relevamiento visual',
-              style: TextStyle(color: Colors.white, fontFamily: 'Orbitron'))),
+              style: TextStyle(color: Colors.white))),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
@@ -48,10 +107,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(
-                    image: AssetImage('images/login.png'),
-                    height: 100.0,
-                  ),
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: TextFormField(
@@ -71,12 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                             ? null
                             : 'Por favor, ingrese un email valido';
                       },
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: Colors.yellow[400],
-                          ),
-                          labelText: 'E-mail'),
+                      decoration: InputDecoration(labelText: 'E-mail'),
                     ),
                   ),
                   Padding(
@@ -100,32 +150,26 @@ class _LoginPageState extends State<LoginPage> {
                             : null;
                       },
                       decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.yellow[400],
-                        ),
                         labelText: 'Password',
                       ),
                     ),
                   ),
                   RaisedButton(
-                      onPressed: () => {
-                            if (_loginForm.currentState.validate())
-                              {
-                                _loginForm.currentState.save(),
-                                tryLogin(),
-                              }
-                            else //f7e044  69fed8
-                              {print("Invalid form")}
-                          },
-                      child: BorderedText(
-                        strokeWidth: 4.0,
-                        strokeColor: Colors.black54,
-                        child: Text("Login",
-                            style: kTitlesTextStyle.copyWith(
-                                fontSize: 20, letterSpacing: 2.0)),
-                      ),
-                      color: ThemeData.dark().accentColor)
+                    onPressed: () => {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Home()))
+                      /*if (_loginForm.currentState.validate())
+                        {
+                          _loginForm.currentState.save(),
+                          tryLogin(),
+                        }
+                      else //f7e044  69fed8
+                        {print("Invalid form")}*/
+                    },
+                    child: Text(
+                      "Login",
+                    ),
+                  ),
                 ],
               ),
             ),

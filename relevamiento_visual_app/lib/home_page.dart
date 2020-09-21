@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
         appBar: AppBar(
             title: Text('Relevamiento visual',
-                style: TextStyle(color: Colors.white))),
+                style: TextStyle(color: Colors.white, fontFamily: 'Orbitron'))),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
