@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'components/list_item.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,39 +11,31 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int selectedLanguage = 0;
-  String selectedSection = "Animales";
+  int selectedSection = 0;
+  var section = kSections;
 
   void switchLanguage() {
     selectedLanguage = selectedLanguage == 2 ? 0 : selectedLanguage + 1;
+  }
+
+  void switchSection() {
+    selectedSection = selectedSection == 2 ? 0 : selectedSection + 1;
   }
 
   List<Widget> makeRows() {
     List<Widget> list = [];
 
     list.add(Expanded(
-        child: SizedBox.expand(child: Center(child: Text(selectedSection)))));
+        child: SizedBox.expand(child: Center(child: Text("Animales")))));
 
-    for (int i = 0; i < 4; i++) {
-      String color = kColors[0][i];
-      list.add(Expanded(
-          child: SizedBox.expand(
-              child: DecoratedBox(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text(kAnimals[0][i]), Text(kColors[0][i])],
-        ),
-        decoration: BoxDecoration(color: Colors.red),
-      ))));
+    for (int i = 0; i < 5; i++) {
+      list.add(ListItem(
+          image: Image(image: AssetImage('images/back.png')),
+          label: Text(kSections[selectedSection][selectedLanguage][i]),
+          color: kBoxColors[i]));
     }
 
     return list;
-  }
-
-  @override
-  void initState() {
-    selectedLanguage = "English";
-    super.initState();
   }
 
   @override
@@ -52,11 +45,13 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             Positioned(
               bottom: 80.0,
-              right: 10.0,
+              left: 25.0,
               child: FloatingActionButton(
                 heroTag: 'save',
                 onPressed: () {
-                  setState(() {});
+                  setState(() {
+                    switchSection();
+                  });
                 },
                 child: Icon(Icons.save),
                 shape: RoundedRectangleBorder(
@@ -66,7 +61,7 @@ class _HomeState extends State<Home> {
             ),
             Positioned(
               bottom: 10.0,
-              right: 10.0,
+              left: 25.0,
               child: FloatingActionButton(
                 heroTag: 'close',
                 onPressed: () {
@@ -91,7 +86,7 @@ class _HomeState extends State<Home> {
                 image: DecorationImage(
                     image: AssetImage('images/back.png'), fit: BoxFit.cover)),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: makeRows(),
             ),
           ),
