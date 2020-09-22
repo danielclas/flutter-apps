@@ -4,7 +4,7 @@ const kLanguages = ['English', 'Spanish', 'Portuguese'];
 const kTtsLanguages = ['en-GB', 'es-ES', 'pt-PT'];
 const kColors = [
   ['Red', 'Blue', 'Yellow', 'Purple', 'Green'],
-  ['Rojo', 'Azul', 'Amarillo', 'Rojo', 'Verde'],
+  ['Rojo', 'Azul', 'Amarillo', 'Púrpura', 'Verde'],
   ['Vermelho', 'Azul', 'Amarelo', 'Roxo', 'Verde'],
 ];
 const kBoxColors = [

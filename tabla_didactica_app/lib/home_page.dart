@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
                     AssetImage('images/${kSectionImages[selectedSection][i]}')),
             label: Text(
               label,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 25),
             ),
             color: kBoxColors[i]),
       );

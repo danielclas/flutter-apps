@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'home_page.dart';
 import 'constants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  int boxColorsIndex = 0;
+  Color color = kBoxColors[0];
   int userIndex = 0;
   String email;
   String password;
@@ -36,11 +39,16 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
+          backgroundColor: color,
           heroTag: 'close',
           onPressed: () {
             setState(() {
               emailController.text = kUsers[userIndex]['correo'];
               passwordController.text = kUsers[userIndex]['clave'];
+
+              boxColorsIndex = boxColorsIndex == 4 ? 0 : boxColorsIndex + 1;
+              color = kBoxColors[boxColorsIndex];
+
               userIndex = userIndex == 5 ? 0 : userIndex + 1;
             });
           },
@@ -135,8 +143,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       RaisedButton(
                         onPressed: () => {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()))
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: Home()))
                           /*if (_loginForm.currentState.validate())
                             {
                               _loginForm.currentState.save(),
@@ -145,9 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                           else //f7e044  69fed8
                             {print("Invalid form")}*/
                         },
-                        child: Text(
-                          "Ingresar",
-                        ),
+                        child: Text("Ingresar", style: TextStyle(fontSize: 20)),
                       ),
                     ],
                   ),
