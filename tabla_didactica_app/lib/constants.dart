@@ -1,32 +1,49 @@
 import 'package:flutter/material.dart';
 
-const List<String> kLanguages = ['English', 'Spanish', 'Portuguese'];
-const List<List<String>> kColors = [
+const kLanguages = ['English', 'Spanish', 'Portuguese'];
+const kTtsLanguages = ['en-GB', 'es-ES', 'pt-PT'];
+const kColors = [
   ['Red', 'Blue', 'Yellow', 'Purple', 'Green'],
   ['Rojo', 'Azul', 'Amarillo', 'Rojo', 'Verde'],
   ['Vermelho', 'Azul', 'Amarelo', 'Roxo', 'Verde'],
 ];
-const List<MaterialColor> kBoxColors = [
+const kBoxColors = [
   Colors.red,
   Colors.blue,
   Colors.yellow,
   Colors.purple,
   Colors.green
 ];
-const List<List<String>> kAnimals = [
+const kAnimals = [
   ['Dog', 'Cat', 'Lion', 'Dolphin', 'Tiger'],
-  ['Perro', 'Gato', 'Leon', 'Deflin', 'Tigre'],
+  ['Perro', 'Gato', 'Leon', 'Delfin', 'Tigre'],
   ['Cachorro', 'Gato', 'Leão', 'Deflin', 'Tigre']
 ];
 
-const List<List<String>> kNumbers = [
+const kNumbers = [
   ['One', 'Two', 'Three', 'Four', 'Five'],
   ['Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco'],
-  ['Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco']
+  ['Um', 'Dois', 'Três', 'Quatro', 'Cinco']
 ];
-//const kLabelStyle = TextStyle();
 
 const kSections = [kNumbers, kColors, kAnimals];
 const kSectionLabels = [
-  ['Numeros', 'Numbers', 'Numerinhos']
+  ['Numbers', 'Números', 'Números'],
+  ['Colors', 'Colores', 'Cores'],
+  ['Animals', 'Animales', 'Animais']
+];
+const kSectionImages = [
+  ['one.png', 'two.png', 'three.png', 'four.png', 'five.png'],
+  ['red.png', 'blue.png', 'yellow.png', 'purple.png', 'green.png'],
+  ['dog.png', 'cat.png', 'lion.png', 'delfin.png', 'tigre.png']
+];
+const kFlags = ['eng.png', 'esp.png', 'por.png'];
+const kIcons = ['num.png', 'col.png', 'ani.png'];
+const kUsers = [
+  {"correo": "admin@admin.com", "clave": "1111"},
+  {"correo": "invitado@invitado.com", "clave": "2222"},
+  {"correo": "usuario@usuario.com", "clave": "3333"},
+  {"correo": "anonimo@anonimo.com", "clave": "4444"},
+  {"correo": "tester@tester.com", "clave": "5555"},
+  {"correo": "", "clave": ""}
 ];

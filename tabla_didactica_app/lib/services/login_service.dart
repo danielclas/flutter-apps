@@ -19,10 +19,6 @@ class LoginService {
         .where('clave', isEqualTo: password)
         .get();
 
-    result.docs.forEach((element) {
-      print(element.data().toString());
-    });
-
     if (result.docs.length >= 1) {
       exists = true;
       user = User.fromJson(result.docs.first.data());
@@ -31,14 +27,3 @@ class LoginService {
     return exists;
   }
 }
-
-/*void flutterFireInit() async {
-
-  var result = await firestore
-      .collection('users')
-      .where('correo', isEqualTo: 'tester@tester.com')
-      .where('clave', isEqualTo: '4444')
-      .get();
-
-  print(result.docs.length);
-}*/

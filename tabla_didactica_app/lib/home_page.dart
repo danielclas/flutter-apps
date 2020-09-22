@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'components/list_item.dart';
+import './services/tts_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,10 +14,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selectedLanguage = 0;
   int selectedSection = 0;
-  var section = kSections;
 
   void switchLanguage() {
     selectedLanguage = selectedLanguage == 2 ? 0 : selectedLanguage + 1;
+    Tts.setTtsLanguage(kTtsLanguages[selectedLanguage]);
   }
 
   void switchSection() {
@@ -26,16 +28,35 @@ class _HomeState extends State<Home> {
     List<Widget> list = [];
 
     list.add(Expanded(
-        child: SizedBox.expand(child: Center(child: Text("Animales")))));
+        child: SizedBox.expand(
+            child: Center(
+                child: Text(kSectionLabels[selectedSection][selectedLanguage],
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 40.0))))));
 
     for (int i = 0; i < 5; i++) {
-      list.add(ListItem(
-          image: Image(image: AssetImage('images/back.png')),
-          label: Text(kSections[selectedSection][selectedLanguage][i]),
-          color: kBoxColors[i]));
+      String label = kSections[selectedSection][selectedLanguage][i];
+      list.add(
+        ListItem(
+            image: Image(
+                width: 70.0,
+                height: 70.0,
+                image:
+                    AssetImage('images/${kSectionImages[selectedSection][i]}')),
+            label: Text(
+              label,
+              style: TextStyle(fontSize: 20),
+            ),
+            color: kBoxColors[i]),
+      );
     }
 
     return list;
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -47,17 +68,13 @@ class _HomeState extends State<Home> {
               bottom: 80.0,
               left: 25.0,
               child: FloatingActionButton(
-                heroTag: 'save',
-                onPressed: () {
-                  setState(() {
-                    switchSection();
-                  });
-                },
-                child: Icon(Icons.save),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
+                  heroTag: 'save',
+                  onPressed: () {
+                    setState(() {
+                      switchSection();
+                    });
+                  },
+                  child: Image.asset('images/${kIcons[selectedSection]}')),
             ),
             Positioned(
               bottom: 10.0,
@@ -69,17 +86,14 @@ class _HomeState extends State<Home> {
                     switchLanguage();
                   });
                 },
-                child: Icon(Icons.close),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                ),
+                child: Image.asset('images/${kFlags[selectedLanguage]}'),
               ),
             ),
           ],
         ),
         appBar: AppBar(
             title: Text('Relevamiento visual',
-                style: TextStyle(color: Colors.white, fontFamily: 'Orbitron'))),
+                style: TextStyle(color: Colors.white))),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
