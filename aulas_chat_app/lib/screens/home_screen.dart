@@ -1,6 +1,8 @@
+import 'package:aulas_chat_app/services/chat_service.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'chat_screen.dart';
+import '../services/login_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,6 +12,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  void init() async {
+    ChatService.initChatService();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +43,7 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Chat(
-                                      aula: 'A',
+                                      aula: Aula.a,
                                     )));
                       },
                       child: Container(
@@ -47,7 +59,7 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Chat(
-                                      aula: 'B',
+                                      aula: Aula.b,
                                     )));
                       },
                       child: Container(
