@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:aulas_chat_app/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ class _ChatState extends State<Chat> {
   TextEditingController messageController = TextEditingController();
   ScrollController controller = ScrollController();
   Key key = Key("list");
+  bool showFab = false;
 
   @override
   void initState() {
@@ -54,15 +57,23 @@ class _ChatState extends State<Chat> {
               Positioned(
                 bottom: 50.0,
                 right: 5.0,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.teal[300],
-                  heroTag: 'scroll',
-                  onPressed: () {
-                    setState(() {
-                      print("Scroll to bottom");
-                    });
-                  },
-                  child: Icon(Icons.keyboard_arrow_down),
+                child: Visibility(
+                  visible: showFab,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.teal[300],
+                    heroTag: 'scroll',
+                    onPressed: () {
+                      setState(() {
+                        showFab = false;
+
+                        controller.animateTo(
+                            controller.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeOut);
+                      });
+                    },
+                    child: Icon(Icons.keyboard_arrow_down),
+                  ),
                 ),
               ),
             ],
@@ -116,6 +127,8 @@ class _ChatState extends State<Chat> {
                             ),
                           );
                         } else {
+                          showFab = true;
+
                           return ListView.builder(
                             key: key,
                             controller: controller,
