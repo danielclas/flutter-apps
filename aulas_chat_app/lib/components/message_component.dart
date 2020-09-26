@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../classes/user.dart';
 import 'package:date_format/date_format.dart';
 import '../classes/message_model.dart';
 import '../services/login_service.dart';
@@ -18,7 +17,9 @@ class Message extends StatefulWidget {
     String date = formatDate(this.dateTime, [yyyy, '-', M, '-', dd]);
     String time = formatDate(this.dateTime, [HH, ':', nn]);
 
-    this.label = '$date $time | ${formatUser()}';
+    this.label = '$date $time';
+    this.label +=
+        message.user == LoginService.user.correo ? '' : ' | ${formatUser()}';
   }
 
   String formatUser() {

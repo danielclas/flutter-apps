@@ -29,33 +29,39 @@ const kAccentColors = [
   Colors.green
 ];
 
-const kUserIcons = [
+final kUserIcons = [
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn2",
   ),
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn3",
   ),
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn4",
   ),
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn5",
   ),
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn6",
   ),
   FloatingActionButton(
+    onPressed: () {},
     backgroundColor: Color(0xff8BC34A),
     child: Icon(Icons.person),
     heroTag: "btn7",
