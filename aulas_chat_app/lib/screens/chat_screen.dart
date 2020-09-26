@@ -1,16 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../components/message_component.dart';
-import '../classes/user.dart';
 import '../classes/message_model.dart';
 import '../services/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Chat extends StatefulWidget {
-  Aula aula;
+  final Aula aula;
 
-  Chat({this.aula}) {
+  Chat({@required this.aula}) {
     ChatService.setAula(aula);
   }
 
@@ -21,6 +21,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  TextEditingController messageController = TextEditingController();
   ScrollController controller = ScrollController();
   Key key = Key("list");
 
@@ -41,7 +42,7 @@ class _ChatState extends State<Chat> {
               right: 5.0,
               child: FloatingActionButton(
                 backgroundColor: Colors.teal[300],
-                heroTag: 'save',
+                heroTag: 'scroll',
                 onPressed: () {
                   setState(() {
                     print("Scroll to bottom");
@@ -54,6 +55,7 @@ class _ChatState extends State<Chat> {
         ),
         body: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 flex: 1,
@@ -61,12 +63,23 @@ class _ChatState extends State<Chat> {
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.8),
                   ),
-                  child: Center(
-                    child: Text(
-                      widget.aula.toString(),
-                      style: kAulaTitleTextStyle,
+                  child: Row(children: [
+                    Container(
+                      width: 40,
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          widget.aula.toString(),
+                          style: kAulaTitleTextStyle,
+                        ),
+                      ),
+                    ),
+                  ]),
                   width: double.infinity,
                 ),
               ),
@@ -100,29 +113,38 @@ class _ChatState extends State<Chat> {
                 ),
               ),
               Expanded(
-                flex: 1,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: messageController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 40,
+                        margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: FloatingActionButton(
+                          child: Icon(Icons.send),
+                          backgroundColor: Colors.teal[300],
+                          onPressed: () {
+                            setState(() {
+                              ChatService.writeMessage(messageController.text);
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
-                  child: TextField(
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    onChanged: (value) {
-                      print(value);
-                    },
-                  ),
                 ),
-              )
+              ),
             ],
           ),
         ));

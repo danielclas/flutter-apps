@@ -1,8 +1,10 @@
+import 'package:aulas_chat_app/screens/loading_screen.dart';
 import 'package:aulas_chat_app/services/chat_service.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import 'chat_screen.dart';
-import '../services/login_service.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,103 +14,137 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void init() async {
+  bool isLoading = false;
+
+  void openChatScreen(Aula aula) {
+    isLoading = true;
     ChatService.initChatService();
+    ChatService.setAula(aula);
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.downToUp,
+        child: Chat(
+          aula: aula,
+        ),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    init();
   }
 
-  //TODO login screen, login user
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Aulas chat')),
         body: SafeArea(
-          child: Center(
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('images/back.png'),
-                    repeat: ImageRepeat.repeat),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
+      child: Center(
+        child: isLoading
+            ? LoadingScreen()
+            : Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('images/back.png'),
+                      repeat: ImageRepeat.repeat),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Chat(
-                                        aula: Aula.a,
-                                      )));
+                          setState(() {
+                            openChatScreen(Aula.a);
+                          });
                         },
-                        child: Container(
-                          child: Image(
-                            image: AssetImage('images/a.png'),
-                            height: 180.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "A",
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 150,
+                                      color: Color(0xff8BC34A).withOpacity(0.8),
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          color: Color(0xff8BC34A)
+                                              .withOpacity(0.5),
+                                          blurRadius: 3,
+                                          offset: Offset(-5, -5),
+                                        ),
+                                      ]),
+                                ),
+                                Text("Presione para ingresar al Aula A"),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xff8BC34A).withOpacity(0.05),
+                              border: Border.all(
+                                  color: Color(0xff8BC34A).withOpacity(0.1),
+                                  width: 2),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(70),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      InkWell(
+                    ),
+                    Expanded(
+                      child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Chat(
-                                        aula: Aula.b,
-                                      )));
+                          setState(() {
+                            openChatScreen(Aula.b);
+                          });
                         },
-                        child: Container(
-                          child: Image(
-                            image: AssetImage('images/b.png'),
-                            height: 180.0,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          child: Text(
-                            "Aula A",
-                            style: kTitlesTextStyle,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "B",
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 150,
+                                      color: Color(0xff8BC34A).withOpacity(0.8),
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          color: Color(0xff8BC34A)
+                                              .withOpacity(0.5),
+                                          blurRadius: 3,
+                                          offset: Offset(-5, -5),
+                                        ),
+                                      ]),
+                                ),
+                                Text("Presione para ingresar al Aula B"),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xff8BC34A).withOpacity(0.05),
+                              border: Border.all(
+                                  color: Color(0xff8BC34A).withOpacity(0.1),
+                                  width: 2),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(70),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          child: Text(
-                            "Aula B",
-                            style: kTitlesTextStyle,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(height: 100),
-                        Text("Presione para ingresar a alguna de las aulas"),
-                      ])
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ));
+      ),
+    ));
   }
 }

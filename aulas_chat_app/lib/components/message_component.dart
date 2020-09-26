@@ -8,7 +8,6 @@ import '../services/login_service.dart';
 int count = 0;
 
 class Message extends StatefulWidget {
-  User user;
   DateTime dateTime;
   String content;
   String label;
@@ -19,7 +18,13 @@ class Message extends StatefulWidget {
     String date = formatDate(this.dateTime, [yyyy, '-', M, '-', dd]);
     String time = formatDate(this.dateTime, [HH, ':', nn]);
 
-    this.label = '$date $time | ${message.user}';
+    this.label = '$date $time | ${formatUser()}';
+  }
+
+  String formatUser() {
+    String user = message.user[0].toUpperCase();
+
+    return user + message.user.substring(1, message.user.indexOf('@'));
   }
 
   Message({this.message}) {
@@ -56,9 +61,12 @@ class _MessageState extends State<Message> {
                 widget.label,
                 style: kMessageDateTextStyle,
               ),
-              Text(
-                widget.content,
-                style: kMessageTextStyle,
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                child: Text(
+                  widget.content,
+                  style: kMessageTextStyle,
+                ),
               ),
             ],
           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const kTitlesTextStyle = TextStyle(
-    fontWeight: FontWeight.bold, fontSize: 30.0, fontFamily: 'Orbitron');
+final kTitlesTextStyle = GoogleFonts.montserrat(
+    fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold);
 
 final kMessageTextStyle =
     GoogleFonts.montserrat(fontSize: 15.0, color: Colors.white);

@@ -2,7 +2,6 @@ import 'package:aulas_chat_app/classes/message_model.dart';
 import 'package:aulas_chat_app/services/login_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../classes/user.dart';
 import 'package:aulas_chat_app/constants.dart';
 
 class ChatService {
@@ -33,6 +32,6 @@ class ChatService {
   }
 
   static Stream<QuerySnapshot> stream() {
-    return firestore.collection(aula).snapshots();
+    return firestore.collection(aula).orderBy('timestamp').snapshots();
   }
 }
