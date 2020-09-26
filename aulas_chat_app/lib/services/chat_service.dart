@@ -23,11 +23,13 @@ class ChatService {
     }
   }
 
-  static void writeMessage(String content) {
-    //User user = LoginService.user;
+  static void writeMessage(String content) async {
     MessageModel message = MessageModel(
-        message: content, timestamp: Timestamp.now(), user: "admin@admin.com");
-    firestore.collection(aula).add(message.toJson());
+        message: content,
+        timestamp: Timestamp.now(),
+        user: LoginService.user.correo);
+
+    await firestore.collection(aula).add(message.toJson());
   }
 
   static Stream<QuerySnapshot> stream() {

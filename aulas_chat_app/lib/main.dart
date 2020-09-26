@@ -1,3 +1,4 @@
+import 'package:aulas_chat_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
 
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Home(),
+      ).copyWith(hintColor: Colors.teal[300]),
+      home: LoginPage(),
     );
   }
 }

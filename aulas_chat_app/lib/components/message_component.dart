@@ -25,7 +25,7 @@ class Message extends StatefulWidget {
   Message({this.message}) {
     this.dateTime = message.timestamp.toDate();
     this.content = message.message;
-    this.isFromLoggedUser = "admin@admin.com" == message.user;
+    this.isFromLoggedUser = LoginService.user.correo == message.user;
     formatLabel();
   }
 
@@ -41,8 +41,11 @@ class _MessageState extends State<Message> {
       flex: 7,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blueGrey[500],
-          borderRadius: BorderRadius.circular(5),
+          color: Color(0xff8BC34A),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            bottomRight: Radius.circular(15.0),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
