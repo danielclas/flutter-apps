@@ -22,86 +22,91 @@ class _HomeState extends State<Home> {
     init();
   }
 
+  //TODO login screen, login user
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Aulas chat')),
-        body: Center(
-          child: Container(
-            decoration: BoxDecoration(
+        body: SafeArea(
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('images/back.png'), fit: BoxFit.cover)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Chat(
-                                      aula: Aula.a,
-                                    )));
-                      },
-                      child: Container(
-                        child: Image(
-                          image: AssetImage('images/a.png'),
-                          height: 180.0,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Chat(
-                                      aula: Aula.b,
-                                    )));
-                      },
-                      child: Container(
-                        child: Image(
-                          image: AssetImage('images/b.png'),
-                          height: 180.0,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        child: Text(
-                          "Aula A",
-                          style: kTitlesTextStyle,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        child: Text(
-                          "Aula B",
-                          style: kTitlesTextStyle,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
+                    image: AssetImage('images/back.png'),
+                    repeat: ImageRepeat.repeat),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(height: 100),
-                      Text("Presione para ingresar a alguna de las aulas"),
-                    ])
-              ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Chat(
+                                        aula: Aula.a,
+                                      )));
+                        },
+                        child: Container(
+                          child: Image(
+                            image: AssetImage('images/a.png'),
+                            height: 180.0,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Chat(
+                                        aula: Aula.b,
+                                      )));
+                        },
+                        child: Container(
+                          child: Image(
+                            image: AssetImage('images/b.png'),
+                            height: 180.0,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          child: Text(
+                            "Aula A",
+                            style: kTitlesTextStyle,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          child: Text(
+                            "Aula B",
+                            style: kTitlesTextStyle,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(height: 100),
+                        Text("Presione para ingresar a alguna de las aulas"),
+                      ])
+                ],
+              ),
             ),
           ),
         ));

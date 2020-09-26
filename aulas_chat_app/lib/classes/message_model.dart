@@ -11,4 +11,10 @@ class MessageModel {
       : message = json['message'],
         timestamp = json['timestamp'],
         user = json['user'];
+
+  Map<String, dynamic> toJson() => {
+        'message': message,
+        'timestamp': timestamp,
+        'user': user,
+      };
 }

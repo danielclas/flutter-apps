@@ -1,3 +1,5 @@
+import 'package:aulas_chat_app/classes/message_model.dart';
+import 'package:aulas_chat_app/services/login_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../classes/user.dart';
@@ -19,6 +21,13 @@ class ChatService {
       await Firebase.initializeApp();
       firestore = FirebaseFirestore.instance;
     }
+  }
+
+  static void writeMessage(String content) {
+    //User user = LoginService.user;
+    MessageModel message = MessageModel(
+        message: content, timestamp: Timestamp.now(), user: "admin@admin.com");
+    firestore.collection(aula).add(message.toJson());
   }
 
   static Stream<QuerySnapshot> stream() {
