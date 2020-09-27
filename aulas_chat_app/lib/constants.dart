@@ -6,8 +6,8 @@ final kTitlesTextStyle = GoogleFonts.montserrat(
 
 final kMessageTextStyle =
     GoogleFonts.montserrat(fontSize: 15.0, color: Colors.white);
-final kMessageDateTextStyle =
-    GoogleFonts.montserrat(fontSize: 12, color: Colors.white);
+final kMessageDateTextStyle = GoogleFonts.montserrat(
+    fontSize: 12, color: Colors.white, decoration: TextDecoration.underline);
 final kAulaTitleTextStyle = GoogleFonts.montserrat(
     fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic);
 

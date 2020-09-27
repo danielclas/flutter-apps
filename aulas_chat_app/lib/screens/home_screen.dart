@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
       context,
       PageTransition(
         type: PageTransitionType.downToUp,
+        duration: Duration(milliseconds: 300),
         child: Chat(
           aula: aula,
         ),
@@ -38,18 +39,6 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void dispose() {
-    Navigator.push(
-      context,
-      PageTransition(
-        type: PageTransitionType.upToDown,
-        child: LoginPage(),
-      ),
-    );
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
@@ -57,6 +46,7 @@ class _HomeState extends State<Home> {
           context,
           PageTransition(
             type: PageTransitionType.upToDown,
+            duration: Duration(milliseconds: 300),
             child: LoginPage(),
           ),
         );

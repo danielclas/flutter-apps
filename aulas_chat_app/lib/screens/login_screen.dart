@@ -32,8 +32,14 @@ class _LoginPageState extends State<LoginPage> {
     bool exists = await LoginService.loginUser(email, password);
 
     if (exists) {
-      Navigator.push(context,
-          PageTransition(type: PageTransitionType.downToUp, child: Home()));
+      Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.downToUp,
+          duration: Duration(milliseconds: 300),
+          child: Home(),
+        ),
+      );
     } else {
       print("Usuario no existe");
     }
@@ -67,6 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
+                            child: Text("Deslice para seleccionar un usuario"),
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                          ),
+                          Container(
                             margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                             decoration: BoxDecoration(
                               color: Colors.teal[300],
@@ -75,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: CarouselSlider(
                               items: kUserIcons,
                               options: CarouselOptions(
-                                height: 100,
+                                height: 80,
                                 viewportFraction: 0.4,
                                 initialPage: 0,
                                 enableInfiniteScroll: true,
@@ -174,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Container(
                                   margin: EdgeInsets.all(10),
                                   child: Text(
-                                    "Login",
+                                    "Ingresar",
                                     style: kTitlesTextStyle.copyWith(
                                         fontSize: 20, letterSpacing: 2.0),
                                   ),
