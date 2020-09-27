@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'components/list_item.dart';
 import './services/tts_service.dart';
+import 'package:page_transition/page_transition.dart';
+import 'login_page.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -56,54 +58,72 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    Tts.setTtsLanguage(kTtsLanguages[0]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        floatingActionButton: Stack(
-          children: <Widget>[
-            Positioned(
-              bottom: 80.0,
-              left: 25.0,
-              child: FloatingActionButton(
-                  heroTag: 'save',
-                  onPressed: () {
-                    setState(() {
-                      switchSection();
-                    });
-                  },
-                  child: Image.asset('images/${kIcons[selectedSection]}')),
-            ),
-            Positioned(
-              bottom: 10.0,
-              left: 25.0,
-              child: FloatingActionButton(
-                heroTag: 'close',
-                onPressed: () {
-                  setState(() {
-                    switchLanguage();
-                  });
-                },
-                child: Image.asset('images/${kFlags[selectedLanguage]}'),
-              ),
-            ),
-          ],
-        ),
-        appBar: AppBar(
-            title: Text('Relevamiento visual',
-                style: TextStyle(color: Colors.white))),
-        body: Center(
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('images/back.png'), fit: BoxFit.cover)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: makeRows(),
-            ),
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.upToDown,
+            duration: Duration(milliseconds: 300),
+            child: LoginPage(),
           ),
-        ));
+        );
+
+        return;
+      },
+      child: SafeArea(
+        child: Scaffold(
+            floatingActionButton: Stack(
+              children: <Widget>[
+                Positioned(
+                  bottom: 80.0,
+                  left: 25.0,
+                  child: FloatingActionButton(
+                      heroTag: 'save',
+                      onPressed: () {
+                        setState(() {
+                          switchSection();
+                        });
+                      },
+                      child: Image.asset('images/${kIcons[selectedSection]}')),
+                ),
+                Positioned(
+                  bottom: 10.0,
+                  left: 25.0,
+                  child: FloatingActionButton(
+                    heroTag: 'close',
+                    onPressed: () {
+                      setState(() {
+                        switchLanguage();
+                      });
+                    },
+                    child: Image.asset('images/${kFlags[selectedLanguage]}'),
+                  ),
+                ),
+              ],
+            ),
+            appBar: AppBar(
+                title: Text('Relevamiento visual',
+                    style: TextStyle(color: Colors.white))),
+            body: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('images/back.png'),
+                        fit: BoxFit.cover)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: makeRows(),
+                ),
+              ),
+            )),
+      ),
+    );
   }
 }

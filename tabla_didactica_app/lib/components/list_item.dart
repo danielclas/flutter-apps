@@ -38,7 +38,7 @@ class _ListItemState extends State<ListItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-                padding: EdgeInsets.fromLTRB(100, 10, 10, 10),
+                padding: EdgeInsets.fromLTRB(80, 10, 10, 10),
                 child: widget.image),
             Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 80, 10),

@@ -48,7 +48,6 @@ class _ChatState extends State<Chat> {
     });
   }
 
-  //TODO scroll list when new message arrives
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
