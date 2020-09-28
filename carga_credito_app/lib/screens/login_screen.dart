@@ -27,21 +27,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void tryLogin() async {
-    isLoading = true;
+    /*isLoading = true;
     bool exists = await LoginService.loginUser(email, password);
 
-    if (exists) {
-      Navigator.push(
-        context,
-        PageTransition(
-          type: PageTransitionType.downToUp,
-          duration: Duration(milliseconds: 300),
-          child: Home(),
-        ),
-      );
-    } else {
+    if (exists) {*/
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.downToUp,
+        duration: Duration(milliseconds: 300),
+        child: Home(),
+      ),
+    );
+    /*} else {
       print("Usuario no existe");
-    }
+    }*/
   }
 
   @override
@@ -80,26 +80,6 @@ class _LoginPageState extends State<LoginPage> {
                             decoration: BoxDecoration(
                               color: Colors.teal[300],
                               shape: BoxShape.circle,
-                            ),
-                            child: CarouselSlider(
-                              items: kUserIcons,
-                              options: CarouselOptions(
-                                height: 80,
-                                viewportFraction: 0.4,
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                enlargeCenterPage: true,
-                                onPageChanged: (index, b) {
-                                  setState(() {
-                                    emailController.text =
-                                        kUsers[index]['correo'];
-                                    passwordController.text =
-                                        kUsers[index]['clave'];
-                                  });
-                                },
-                                scrollDirection: Axis.horizontal,
-                              ),
                             ),
                           ),
                           Padding(
@@ -172,20 +152,18 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 onPressed: () => {
-                                      if (_loginForm.currentState.validate())
+                                      /*if (_loginForm.currentState.validate())
                                         {
-                                          _loginForm.currentState.save(),
-                                          tryLogin(),
-                                        }
+                                          _loginForm.currentState.save(),*/
+                                      tryLogin(),
+                                      /*}
                                       else //f7e044  69fed8
-                                        {print("Invalid form")}
+                                        {print("Invalid form")}*/
                                     },
                                 child: Container(
                                   margin: EdgeInsets.all(10),
                                   child: Text(
                                     "Ingresar",
-                                    style: kTitlesTextStyle.copyWith(
-                                        fontSize: 20, letterSpacing: 2.0),
                                   ),
                                 ),
                                 color: Color(0xff8BC34A)),

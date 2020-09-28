@@ -14,8 +14,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: SafeArea(
         child: Center(
           child: Container(
-            child: SpinKitFadingFour(
-              color: Colors.teal[300],
+            child: SpinKitWave(
+              color: Colors.grey[400],
               size: 100,
             ),
             width: double.infinity,
