@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:relevamiento_visual_app/camera_page.dart';
 import 'like_page.dart';
 import 'dislike_page.dart';
 import 'constants.dart';
@@ -20,11 +22,53 @@ class _HomeState extends State<Home> {
         body: Center(
           child: Container(
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('images/back.png'), fit: BoxFit.cover)),
+              image: DecorationImage(
+                  image: AssetImage('images/back.png'),
+                  repeat: ImageRepeat.repeat),
+            ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Icon(
+                        Icons.camera,
+                        size: 150,
+                        color: Color(0xff69FED8),
+                      ),
+                    )
+                  ],
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Subir fotos",
+                        style: kTitlesTextStyle,
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Icon(
+                          Icons.camera,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(30),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 5,
+                    child: ColoredBox(
+                      color: Colors.white.withOpacity(0.9),
+                    ),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -46,7 +90,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DislikePage()));
+                                builder: (context) => CameraComponent()));
                       },
                       child: Container(
                           child: Image(
@@ -56,28 +100,24 @@ class _HomeState extends State<Home> {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        child: Text(
-                          "Lindas",
-                          style: kTitlesTextStyle,
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Votar fotos",
+                        style: kTitlesTextStyle,
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Icon(
+                          Icons.thumbs_up_down,
+                          size: 30,
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        child: Text(
-                          "Feas",
-                          style: kTitlesTextStyle,
-                        ),
-                      ),
-                    )
-                  ],
+                    ],
+                  ),
                 )
               ],
             ),

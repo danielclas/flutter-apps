@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './components/camera_component.dart';
+import 'camera_page.dart';
 
 class DislikePage extends StatefulWidget {
   @override

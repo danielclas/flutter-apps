@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './components/camera_component.dart';
+import 'camera_page.dart';
 
 class LikePage extends StatefulWidget {
   @override
@@ -11,6 +11,6 @@ class LikePage extends StatefulWidget {
 class _LikePageState extends State<LikePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: CameraComponent());
+    return Scaffold();
   }
 }
