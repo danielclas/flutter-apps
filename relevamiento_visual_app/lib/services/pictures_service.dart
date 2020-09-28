@@ -1,31 +1,31 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class LoginService {
+class PictureService {
   static FirebaseFirestore firestore;
+  static FirebaseStorage storage;
+  static String storageBucket = "gs://pps-apps-aa8cf.appspot.com";
 
-  static Future<bool> loginUser(String email, String password) async {
+  static Future<StorageUploadTask> uploadPicture(File file) async {
     if (firestore == null) {
       await Firebase.initializeApp();
       firestore = FirebaseFirestore.instance;
     }
 
-    bool exists = false;
-    var result = await firestore
-        .collection('users')
-        .where('correo', isEqualTo: email)
-        .where('clave', isEqualTo: password)
-        .get();
-
-    result.docs.forEach((element) {
-      print(element.data().toString());
-    });
-
-    if (result.docs.length >= 1) {
-      exists = true;
-      //user = User.fromJson(result.docs.first.data());
+    if (storage == null) {
+      print("Is null");
+      storage = FirebaseStorage(storageBucket: storageBucket);
+      print("Here");
     }
 
-    return exists;
+    String timestamp = Timestamp.now().toString();
+    String path = 'images/$timestamp.jpg';
+
+    //TODO register on collection 'picture' how is uploading it
+
+    return FirebaseStorage.instance.ref().child(path).putFile(file);
   }
 }

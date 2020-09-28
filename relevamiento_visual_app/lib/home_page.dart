@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:relevamiento_visual_app/camera_page.dart';
-import 'like_page.dart';
-import 'dislike_page.dart';
+import 'package:relevamiento_visual_app/upload_page.dart';
+import 'package:relevamiento_visual_app/voting_page.dart';
 import 'constants.dart';
 
 class Home extends StatefulWidget {
@@ -29,17 +28,23 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Icon(
-                        Icons.camera,
-                        size: 150,
-                        color: Color(0xff69FED8),
-                      ),
-                    )
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UploadPage()));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Icon(
+                          Icons.camera,
+                          size: 150,
+                          color: Color(0xff69FED8),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   child: Row(
@@ -77,7 +82,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LikePage()));
+                                builder: (context) => VotingPage()));
                       },
                       child: Container(
                           child: Image(
@@ -90,7 +95,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CameraComponent()));
+                                builder: (context) => VotingPage()));
                       },
                       child: Container(
                           child: Image(

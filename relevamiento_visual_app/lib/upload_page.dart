@@ -1,20 +1,23 @@
 import 'dart:io';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:relevamiento_visual_app/services/pictures_service.dart';
 import 'constants.dart';
 
-class CameraComponent extends StatefulWidget {
+class UploadPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _CameraComponentState();
+    return _UploadPageState();
   }
 }
 
-class _CameraComponentState extends State<CameraComponent> {
+class _UploadPageState extends State<UploadPage> {
   File imageFile;
-  final picker = ImagePicker();
+  bool showSpinner = false;
+  ImagePicker picker = ImagePicker();
+  StorageUploadTask task;
 
   Future<void> pickImage(ImageSource source) async {
     final selected = await picker.getImage(source: source);
@@ -31,10 +34,13 @@ class _CameraComponentState extends State<CameraComponent> {
   void discard() {
     setState(() {
       imageFile = null;
+      showSpinner = false;
     });
   }
 
-  void upload() {}
+  void upload() {
+    PictureService.uploadPicture(imageFile);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +85,39 @@ class _CameraComponentState extends State<CameraComponent> {
                       color: Colors.white.withOpacity(0.9), width: 2),
                 ),
               ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: LinearProgressIndicator(
+                  value: 0.7,
+                  minHeight: 10,
+                ),
+              ),
+              /*child: task == null
+                  ? null
+                  : StreamBuilder<StorageTaskEvent>(
+                      stream: task.events,
+                      builder: (context, snapshot) {
+                        var event = snapshot?.data?.snapshot;
+                        double progressPercent = event != null
+                            ? event.bytesTransferred / event.totalByteCount
+                            : 0;
+
+                        return Row(
+                          children: [
+                            if (task.isInProgress)
+                              LinearProgressIndicator(
+                                value: progressPercent,
+                              ),
+                            Text(
+                                '${(progressPercent * 100).toStringAsFixed(2)}'),
+                            if (task.isComplete) Text("COMPLETED!"),
+                          ],
+                        );
+                      },
+                    ),*/
             ),
             Container(
               padding: EdgeInsets.all(30),
