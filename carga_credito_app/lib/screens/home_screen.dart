@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bordered_text/bordered_text.dart';
+import 'package:carga_credito_app/classes/credit.dart';
 import 'package:carga_credito_app/screens/login_screen.dart';
 import 'package:carga_credito_app/services/credit_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -22,12 +23,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String qrCode;
   int totalCredits;
-  bool showSpinner;
-  StorageUploadTask task;
 
   Future<int> scan() async {
     qrCode = await scanner.scan();
-
     return kCreditCodes[qrCode.substring(0, 7)];
   }
 
@@ -38,8 +36,19 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void cleanCredits() async {
-    print("Borrar creditos");
+  void clearCreditHandler() async {
+    setState(() {
+      //Set to null to show spinner
+      totalCredits = null;
+    });
+
+    await Future.delayed(Duration(seconds: 3));
+    await CreditService.putCredits(0, true);
+    await CreditService.getCredits();
+
+    setState(() {
+      totalCredits = CreditService.credit.totalCredits;
+    });
   }
 
   void putCreditHandler() async {
@@ -48,14 +57,15 @@ class _HomeState extends State<Home> {
     bool canPutCredit = CreditService.canPutCredit(amount);
 
     if (!canPutCredit) {
-      Alert(message: 'Test').show();
+      Alert(message: 'No es posible acumular más créditos').show();
     } else {
       setState(() {
         //Set to null to show spinner
         totalCredits = null;
       });
 
-      await CreditService.putCredits(amount);
+      await Future.delayed(Duration(seconds: 3));
+      await CreditService.putCredits(amount, false);
       await CreditService.getCredits();
 
       setState(() {
@@ -68,14 +78,10 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     initCredits();
-    Alert(message: 'Test').show();
-    showSpinner = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    if (totalCredits == null) initCredits();
-
     return WillPopScope(
       onWillPop: () {
         Navigator.push(
@@ -171,10 +177,7 @@ class _HomeState extends State<Home> {
                       shape: CircleBorder()),
                   RaisedButton(
                       //Limpiar creditos
-                      onPressed: () {
-                        //cleanCredits();
-                        CreditService.putCredits(100);
-                      },
+                      onPressed: clearCreditHandler,
                       color: Colors.blueGrey,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

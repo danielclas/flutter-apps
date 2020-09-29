@@ -20,7 +20,7 @@ class CreditService {
 
     var result = await firestore
         .collection('credits')
-        .where('user', isEqualTo: "admin@admin.com")
+        .where('user', isEqualTo: user)
         .get();
 
     if (result.docs.length >= 1) {
@@ -30,7 +30,7 @@ class CreditService {
     return;
   }
 
-  static bool canPutCredit(amount) {
+  static bool canPutCredit(int amount) {
     bool contains = credit.credits.contains(amount);
     bool userIsAdmin = credit.user.contains("admin");
 
@@ -43,7 +43,7 @@ class CreditService {
     return credit.credits.where((c) => c == amount).length <= 1;
   }
 
-  static Future<void> putCredits(int amount) async {
+  static Future<void> putCredits(int amount, bool clear) async {
     if (LoginService.firestore == null) {
       await Firebase.initializeApp();
       firestore = FirebaseFirestore.instance;
@@ -60,7 +60,13 @@ class CreditService {
 
     if (result.docs.length >= 1) {
       var arr = credit.credits;
-      arr.add(amount);
+
+      if (clear) {
+        arr = [];
+      } else {
+        arr.add(amount);
+      }
+
       await firestore
           .collection('credits')
           .doc(result.docs.first.id)
