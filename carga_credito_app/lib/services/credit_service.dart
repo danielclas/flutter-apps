@@ -16,7 +16,7 @@ class CreditService {
       firestore = LoginService.firestore;
     }
 
-    //String user = LoginService.user.correo;
+    String user = LoginService.user.correo;
 
     var result = await firestore
         .collection('credits')
@@ -30,5 +30,46 @@ class CreditService {
     return;
   }
 
-  static Future<void> putCredits() async {}
+  static bool canPutCredit(amount) {
+    bool contains = credit.credits.contains(amount);
+    bool userIsAdmin = credit.user.contains("admin");
+
+    if (!contains) {
+      return true;
+    } else if (!userIsAdmin) {
+      return false;
+    }
+
+    return credit.credits.where((c) => c == amount).length <= 1;
+  }
+
+  static Future<void> putCredits(int amount) async {
+    if (LoginService.firestore == null) {
+      await Firebase.initializeApp();
+      firestore = FirebaseFirestore.instance;
+    } else {
+      firestore = LoginService.firestore;
+    }
+
+    String user = LoginService.user.correo;
+
+    var result = await firestore
+        .collection('credits')
+        .where('user', isEqualTo: user)
+        .get();
+
+    if (result.docs.length >= 1) {
+      var arr = credit.credits;
+      arr.add(amount);
+      await firestore
+          .collection('credits')
+          .doc(result.docs.first.id)
+          .update({"credits": arr});
+    } else {
+      await firestore.collection('credits').add({
+        'credits': [amount],
+        'user': user
+      });
+    }
+  }
 }

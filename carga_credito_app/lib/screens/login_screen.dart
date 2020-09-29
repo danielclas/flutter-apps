@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 import 'package:page_transition/page_transition.dart';
 import '../services/login_service.dart';
@@ -39,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
         context,
         PageTransition(
-          type: PageTransitionType.downToUp,
-          duration: Duration(milliseconds: 300),
+          type: PageTransitionType.rightToLeftWithFade,
+          duration: Duration(milliseconds: 1000),
           child: Home(),
         ),
       );
@@ -69,6 +70,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Carga de créditos',
+            style: GoogleFonts.overpass(color: Colors.white),
+          ),
+        ),
         body: Center(
           child: isLoading
               ? LoadingScreen()
@@ -129,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 setState(() {
                                   userIndex =
-                                      userIndex == 0 ? 5 : userIndex + 1;
+                                      userIndex == 0 ? 5 : userIndex - 1;
 
                                   emailController.text =
                                       kUsers[userIndex]['correo'];
