@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -6,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import '../services/login_service.dart';
 import 'home_screen.dart';
 import 'loading_screen.dart';
+import 'package:carga_credito_app/components/login_card.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email;
   String password;
+  int userIndex = 0;
   bool isLoading;
   final _loginForm = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -24,24 +27,36 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     isLoading = false;
+    emailController.text = kUsers[userIndex]['correo'];
+    passwordController.text = kUsers[userIndex]['clave'];
   }
 
   void tryLogin() async {
-    /*isLoading = true;
+    isLoading = true;
     bool exists = await LoginService.loginUser(email, password);
 
-    if (exists) {*/
-    Navigator.push(
-      context,
-      PageTransition(
-        type: PageTransitionType.downToUp,
-        duration: Duration(milliseconds: 300),
-        child: Home(),
-      ),
-    );
-    /*} else {
+    if (exists) {
+      Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.downToUp,
+          duration: Duration(milliseconds: 300),
+          child: Home(),
+        ),
+      );
+    } else {
       print("Usuario no existe");
-    }*/
+    }
+  }
+
+  List<LoginCard> buildCards() {
+    List<LoginCard> list = [];
+
+    for (var user in kUsers) {
+      list.add(LoginCard(user['correo'], user['clave']));
+    }
+
+    return list;
   }
 
   @override
@@ -60,117 +75,116 @@ class _LoginPageState extends State<LoginPage> {
               : Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('images/back.png'),
-                      repeat: ImageRepeat.repeat,
+                      image: AssetImage('images/back.jpg'),
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.8), BlendMode.dstATop),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Form(
-                      key: _loginForm,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 100,
+                        color: Colors.white70,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+                        child: TextField(
+                          controller: emailController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white70),
+                            labelText: 'Email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: TextField(
+                          controller: passwordController,
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white70),
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            child: Text("Deslice para seleccionar un usuario"),
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                            decoration: BoxDecoration(
-                              color: Colors.teal[300],
-                              shape: BoxShape.circle,
+                          RaisedButton(
+                              onPressed: () {
+                                setState(() {
+                                  userIndex =
+                                      userIndex == 0 ? 5 : userIndex + 1;
+
+                                  emailController.text =
+                                      kUsers[userIndex]['correo'];
+                                  passwordController.text =
+                                      kUsers[userIndex]['clave'];
+                                });
+                              },
+                              color: Colors.blueGrey,
+                              child: Icon(
+                                Icons.keyboard_arrow_left,
+                                color: Colors.white70,
+                              ),
+                              shape: CircleBorder()),
+                          RaisedButton(
+                            color: Colors.blueGrey,
+                            onPressed: () {
+                              setState(() {
+                                tryLogin();
+                              });
+                            },
+                            child: Text(
+                              "Ingresar",
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.white70),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: TextFormField(
-                              controller: emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              onChanged: (value) {
-                                setState(() {
-                                  _loginForm.currentState.validate();
-                                });
-                              },
-                              onSaved: (value) {
-                                setState(() {
-                                  email = value;
-                                });
-                              },
-                              validator: (value) {
-                                return EmailValidator.validate(value)
-                                    ? null
-                                    : 'Por favor, ingrese un email valido';
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'E-mail',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.all(
+                                Radius.circular(30),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: TextFormField(
-                              controller: passwordController,
-                              keyboardType: TextInputType.text,
-                              obscureText: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  _loginForm.currentState.validate();
-                                });
-                              },
-                              onSaved: (value) {
-                                setState(() {
-                                  password = value;
-                                });
-                              },
-                              validator: (value) {
-                                return value.isEmpty
-                                    ? 'Por favor, ingrese una contraseña'
-                                    : null;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Password',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                            child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30),
-                                  ),
-                                ),
-                                onPressed: () => {
-                                      /*if (_loginForm.currentState.validate())
-                                        {
-                                          _loginForm.currentState.save(),*/
-                                      tryLogin(),
-                                      /*}
-                                      else //f7e044  69fed8
-                                        {print("Invalid form")}*/
-                                    },
-                                child: Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: Text(
-                                    "Ingresar",
-                                  ),
-                                ),
-                                color: Color(0xff8BC34A)),
-                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                userIndex = userIndex == 5 ? 0 : userIndex + 1;
+                                emailController.text =
+                                    kUsers[userIndex]['correo'];
+                                passwordController.text =
+                                    kUsers[userIndex]['clave'];
+                              });
+                            },
+                            color: Colors.blueGrey,
+                            child: Icon(Icons.keyboard_arrow_right,
+                                color: Colors.white70),
+                            shape: CircleBorder(),
+                          )
                         ],
                       ),
-                    ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                          child: Text(
+                            "Seleccione un usuario utilizando los controles",
+                            style: TextStyle(color: Colors.white70),
+                          )),
+                    ],
                   ),
                 ),
         ),

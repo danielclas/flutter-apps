@@ -14,15 +14,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: SafeArea(
         child: Center(
           child: Container(
-            child: SpinKitWave(
-              color: Colors.grey[400],
+            child: SpinKitRipple(
+              color: Colors.blueGrey,
               size: 100,
             ),
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/back.png'),
-                repeat: ImageRepeat.repeat,
+                image: AssetImage('images/back.jpg'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.8), BlendMode.dstATop),
               ),
             ),
           ),

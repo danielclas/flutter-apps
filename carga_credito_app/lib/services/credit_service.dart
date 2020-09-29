@@ -23,8 +23,6 @@ class CreditService {
         .where('user', isEqualTo: "admin@admin.com")
         .get();
 
-    print(result.docs.length);
-
     if (result.docs.length >= 1) {
       credit = Credit.fromJson(result.docs.first.data());
     }
