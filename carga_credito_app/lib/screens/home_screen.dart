@@ -3,6 +3,7 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:carga_credito_app/classes/credit.dart';
 import 'package:carga_credito_app/screens/login_screen.dart';
 import 'package:carga_credito_app/services/credit_service.dart';
+import 'package:carga_credito_app/services/login_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -32,11 +33,17 @@ class _HomeState extends State<Home> {
   void initCredits() async {
     await CreditService.getCredits();
     setState(() {
-      totalCredits = CreditService.credit.totalCredits;
+      totalCredits =
+          CreditService.credit == null ? 0 : CreditService.credit.totalCredits;
     });
   }
 
   void clearCreditHandler() async {
+    if (totalCredits == null || totalCredits == 0) {
+      Alert(message: 'Usted no tiene créditos para eliminar').show();
+      return;
+    }
+
     setState(() {
       //Set to null to show spinner
       totalCredits = null;
@@ -87,9 +94,9 @@ class _HomeState extends State<Home> {
         Navigator.push(
           context,
           PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            duration: Duration(milliseconds: 1000),
-            child: Home(),
+            type: PageTransitionType.leftToRightWithFade,
+            duration: Duration(milliseconds: 500),
+            child: LoginPage(),
           ),
         );
 
@@ -104,8 +111,8 @@ class _HomeState extends State<Home> {
               Navigator.push(
                   context,
                   PageTransition(
-                      type: PageTransitionType.rightToLeftWithFade,
-                      duration: Duration(milliseconds: 1000),
+                      type: PageTransitionType.leftToRightWithFade,
+                      duration: Duration(milliseconds: 500),
                       child: LoginPage()));
             },
           ),
@@ -132,6 +139,13 @@ class _HomeState extends State<Home> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                      child: Text(
+                        "Bienvenido, ${LoginService.user.correo.substring(0, LoginService.user.correo.indexOf('@'))}!",
+                        style: GoogleFonts.overpass(fontSize: 20),
+                      ),
+                    ),
                     Text(
                       "Usted tiene",
                       style: GoogleFonts.overpass(fontSize: 30),

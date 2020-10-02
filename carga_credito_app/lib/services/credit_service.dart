@@ -25,12 +25,16 @@ class CreditService {
 
     if (result.docs.length >= 1) {
       credit = Credit.fromJson(result.docs.first.data());
+    } else {
+      credit = null;
     }
 
     return;
   }
 
   static bool canPutCredit(int amount) {
+    if (credit == null) return true;
+
     bool contains = credit.credits.contains(amount);
     bool userIsAdmin = credit.user.contains("admin");
 
@@ -72,6 +76,7 @@ class CreditService {
           .doc(result.docs.first.id)
           .update({"credits": arr});
     } else {
+      print("Entro al else porque 0 es menor");
       await firestore.collection('credits').add({
         'credits': [amount],
         'user': user

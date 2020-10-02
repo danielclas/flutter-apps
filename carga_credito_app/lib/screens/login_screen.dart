@@ -34,14 +34,15 @@ class _LoginPageState extends State<LoginPage> {
 
   void tryLogin() async {
     isLoading = true;
-    bool exists = await LoginService.loginUser(email, password);
+    bool exists = await LoginService.loginUser(
+        emailController.text, passwordController.text);
 
     if (exists) {
       Navigator.push(
         context,
         PageTransition(
           type: PageTransitionType.rightToLeftWithFade,
-          duration: Duration(milliseconds: 1000),
+          duration: Duration(milliseconds: 500),
           child: Home(),
         ),
       );
@@ -71,6 +72,10 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: Icon(
+            Icons.person,
+            color: Colors.transparent,
+          ),
           centerTitle: true,
           title: Text(
             'Carga de créditos',
