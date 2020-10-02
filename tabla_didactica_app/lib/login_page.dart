@@ -25,13 +25,14 @@ class _LoginPageState extends State<LoginPage> {
 
   void tryLogin() async {
     isLoading = true;
-    bool exists = await LoginService.loginUser(email, password);
+    bool exists = await LoginService.loginUser(
+        emailController.text, passwordController.text);
 
     if (exists) {
       Navigator.push(
         context,
         PageTransition(
-          type: PageTransitionType.rightToLeft,
+          type: PageTransitionType.scale,
           child: Home(),
         ),
       );

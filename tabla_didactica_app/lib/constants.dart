@@ -16,8 +16,8 @@ const kBoxColors = [
 ];
 const kAnimals = [
   ['Dog', 'Cat', 'Lion', 'Dolphin', 'Tiger'],
-  ['Perro', 'Gato', 'Leon', 'Delfin', 'Tigre'],
-  ['Cachorro', 'Gato', 'Leão', 'Deflin', 'Tigre']
+  ['Perro', 'Gato', 'León', 'Delfín', 'Tigre'],
+  ['Cachorro', 'Gato', 'Leão', 'Golfinho', 'Tigre']
 ];
 
 const kNumbers = [
