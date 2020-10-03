@@ -9,7 +9,7 @@ class PictureService {
   static FirebaseStorage storage;
   static String storageBucket = "gs://pps-apps-aa8cf.appspot.com";
 
-  static Future<StorageUploadTask> uploadPicture(File file) async {
+  static void initService() async {
     if (firestore == null) {
       await Firebase.initializeApp();
       firestore = FirebaseFirestore.instance;
@@ -20,6 +20,10 @@ class PictureService {
       storage = FirebaseStorage(storageBucket: storageBucket);
       print("Here");
     }
+  }
+
+  static StorageUploadTask uploadPicture(File file) {
+    initService();
 
     String timestamp = Timestamp.now().toString();
     String path = 'images/$timestamp.jpg';

@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:relevamiento_visual_app/services/pictures_service.dart';
 import 'constants.dart';
+import 'package:path_provider/path_provider.dart';
 
 class UploadPage extends StatefulWidget {
   @override
@@ -18,28 +20,43 @@ class _UploadPageState extends State<UploadPage> {
   bool showSpinner = false;
   ImagePicker picker = ImagePicker();
   StorageUploadTask task;
+  Image image;
 
   Future<void> pickImage(ImageSource source) async {
     final selected = await picker.getImage(source: source);
+    final bytes = await selected.readAsBytes();
 
     setState(() {
-      if (selected != null) {
-        imageFile = File(selected.path);
-      } else {
-        print('No image selected.');
-      }
+      showSpinner = true;
+    });
+
+    await Future.delayed(Duration(seconds: 2));
+    Directory tempDir = await getTemporaryDirectory();
+    imageFile = File('${tempDir.path}/temp.jpg');
+
+    var stream = imageFile.openWrite();
+    stream.write(bytes);
+    stream.close();
+
+    image = Image.memory(bytes);
+
+    setState(() {
+      showSpinner = false;
     });
   }
 
   void discard() {
     setState(() {
+      image = null;
       imageFile = null;
       showSpinner = false;
     });
   }
 
-  void upload() {
-    PictureService.uploadPicture(imageFile);
+  void upload() async {
+    setState(() {
+      task = PictureService.uploadPicture(imageFile);
+    });
   }
 
   @override
@@ -63,20 +80,25 @@ class _UploadPageState extends State<UploadPage> {
               },
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 50, 0, 10),
-                child: imageFile == null
+                child: image == null
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.camera),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          ),
-                          Text("Presiona para tomar una foto"),
-                        ],
+                        children: showSpinner
+                            ? [
+                                SpinKitFadingCube(
+                                  color: Colors.yellow[400],
+                                  size: 100,
+                                ),
+                              ]
+                            : [
+                                Icon(Icons.camera),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                ),
+                                Text("Presiona para tomar una foto"),
+                              ],
                       )
-                    : Image(
-                        image: AssetImage(imageFile.path),
-                      ),
+                    : image,
                 height: 280,
                 width: 280,
                 decoration: BoxDecoration(
@@ -88,36 +110,38 @@ class _UploadPageState extends State<UploadPage> {
             ),
             Container(
               margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-              child: Padding(
+              /*child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: LinearProgressIndicator(
                   value: 0.7,
                   minHeight: 10,
                 ),
-              ),
-              /*child: task == null
+              ),*/
+              child: task == null
                   ? null
-                  : StreamBuilder<StorageTaskEvent>(
-                      stream: task.events,
-                      builder: (context, snapshot) {
-                        var event = snapshot?.data?.snapshot;
-                        double progressPercent = event != null
-                            ? event.bytesTransferred / event.totalByteCount
-                            : 0;
+                  : Expanded(
+                      child: StreamBuilder<StorageTaskEvent>(
+                        stream: task.events,
+                        builder: (context, snapshot) {
+                          var event = snapshot?.data?.snapshot;
+                          double progressPercent = event != null
+                              ? event.bytesTransferred / event.totalByteCount
+                              : 0;
 
-                        return Row(
-                          children: [
-                            if (task.isInProgress)
-                              LinearProgressIndicator(
-                                value: progressPercent,
-                              ),
-                            Text(
-                                '${(progressPercent * 100).toStringAsFixed(2)}'),
-                            if (task.isComplete) Text("COMPLETED!"),
-                          ],
-                        );
-                      },
-                    ),*/
+                          return Row(
+                            children: [
+                              if (task.isInProgress)
+                                LinearProgressIndicator(
+                                  value: progressPercent,
+                                ),
+                              Text(
+                                  '${(progressPercent * 100).toStringAsFixed(2)}'),
+                              if (task.isComplete) Text("COMPLETED!"),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
             ),
             Container(
               padding: EdgeInsets.all(30),
@@ -130,7 +154,7 @@ class _UploadPageState extends State<UploadPage> {
               ),
             ),
             RaisedButton(
-                onPressed: imageFile == null ? null : upload,
+                onPressed: image == null ? null : upload,
                 child: BorderedText(
                   strokeWidth: 4.0,
                   strokeColor: Colors.black54,
@@ -142,7 +166,7 @@ class _UploadPageState extends State<UploadPage> {
                 ),
                 color: ThemeData.dark().accentColor),
             RaisedButton(
-                onPressed: imageFile == null ? null : discard,
+                onPressed: image == null ? null : discard,
                 child: BorderedText(
                   strokeWidth: 4.0,
                   strokeColor: Colors.black54,
