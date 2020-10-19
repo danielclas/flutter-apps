@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:alarma_robo_app/services/login_service.dart';
+import 'package:camerawesome/models/orientations.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,6 +12,8 @@ import '../constants.dart';
 import 'package:alert/alert.dart';
 import '../services/tts_service.dart';
 import 'dart:ui';
+import 'package:vibration/vibration.dart';
+import 'package:camerawesome/camerawesome_plugin.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,8 +26,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Color color = Colors.grey;
   String label = 'Desactivar la alarma';
   IconData icon = Icons.alarm_off;
-  int index = 0;
+
   bool isPortraitMode = false;
+
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -45,6 +51,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
         Tts.speak(kWarnings[0]);
       } else {
         Tts.speak(kWarnings[1]);
+        Vibration.vibrate(duration: 5000);
       }
 
       isPortraitMode = window.physicalSize.width > window.physicalSize.height;
@@ -59,7 +66,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           : 'Activar la alarma';
       this.icon = this.color == Colors.grey ? Icons.alarm_off : Icons.alarm_add;
 
-      if (this.color == Colors.grey) {
+      if (this.color != Colors.grey) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -142,7 +149,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
               padding: const EdgeInsets.all(20.0),
               child: Container(
                 margin: isPortraitMode
-                    ? EdgeInsets.fromLTRB(40, 0, 0, 0)
+                    ? EdgeInsets.fromLTRB(35, 0, 0, 0)
                     : EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Center(
                   child: Flex(

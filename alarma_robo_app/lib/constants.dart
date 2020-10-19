@@ -11,6 +11,6 @@ const kUsers = [
 ];
 
 const kWarnings = [
+  '¡Epa! ¿Qué estás por hacer?',
   '¡Están hurtando el dispositivo!',
-  '¡Epa! ¿Qué estás por hacer?'
 ];
