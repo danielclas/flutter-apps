@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import '../constants.dart';
 import 'package:alert/alert.dart';
+import '../services/tts_service.dart';
 import 'dart:ui';
 
 class Home extends StatefulWidget {
@@ -20,11 +21,14 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Color color = Colors.grey;
   String label = 'Desactivar la alarma';
   IconData icon = Icons.alarm_off;
+  int index = 0;
+  bool isPortraitMode = false;
   TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    Tts.initializeTts();
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -37,8 +41,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     setState(() {
-      print(window.physicalSize.width);
-      print(window.physicalSize.height);
+      if (isPortraitMode) {
+        Tts.speak(kWarnings[0]);
+      } else {
+        Tts.speak(kWarnings[1]);
+      }
+
+      isPortraitMode = window.physicalSize.width > window.physicalSize.height;
     });
   }
 
@@ -50,61 +59,65 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           : 'Activar la alarma';
       this.icon = this.color == Colors.grey ? Icons.alarm_off : Icons.alarm_add;
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            backgroundColor: Colors.black,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(70),
-              ),
-            ),
-            title: Text(
-              "Ingrese contraseña",
-              style: TextStyle(color: Colors.white),
-            ),
-            content: TextField(
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red[500], width: 0.0),
+      if (this.color == Colors.grey) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              backgroundColor: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(70),
                 ),
-                labelStyle: TextStyle(color: Colors.white70),
-                labelText: 'Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
+              ),
+              title: Text(
+                "Ingrese contraseña",
+                style: TextStyle(color: Colors.white),
+              ),
+              content: TextField(
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                decoration: InputDecoration(
+                  fillColor: Colors.green,
+                  focusColor: Colors.green,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[500], width: 0.0),
+                  ),
+                  labelStyle: TextStyle(color: Colors.white70),
+                  labelText: 'Contraseña',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
                   ),
                 ),
               ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  "Ingresar",
-                  style: TextStyle(color: Colors.white),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    "Ingresar",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    print("contraseña");
+                  },
                 ),
-                onPressed: () {
-                  print("contraseña");
-                },
-              ),
-              FlatButton(
-                child: Text(
-                  "Cerrar",
-                  style: TextStyle(color: Colors.white),
+                FlatButton(
+                  child: Text(
+                    "Cerrar",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+              ],
+            );
+          },
+        );
+      }
     });
   }
 
@@ -128,23 +141,32 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                margin: isPortraitMode
+                    ? EdgeInsets.fromLTRB(40, 0, 0, 0)
+                    : EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Center(
-                  child: Column(
+                  child: Flex(
+                    direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
+                      Flex(
+                        direction:
+                            isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "Bienvenido, ${LoginService.user.correo.substring(0, LoginService.user.correo.indexOf('@'))}",
-                            style: TextStyle(fontSize: 30, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: isPortraitMode ? 15 : 30,
+                                color: Colors.white),
                           )
                         ],
                       ),
-                      Row(
+                      Flex(
+                        direction:
+                            isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -164,7 +186,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                 child: Container(
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
-                                    child: Column(
+                                    child: Flex(
+                                      direction: isPortraitMode
+                                          ? Axis.horizontal
+                                          : Axis.vertical,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
@@ -173,7 +198,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                         Icon(
                                           icon,
                                           color: color,
-                                          size: 200,
+                                          size: isPortraitMode ? 50 : 200,
                                         ),
                                         Text(
                                           label,
@@ -191,7 +216,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                           )
                         ],
                       ),
-                      Row(
+                      Flex(
+                        direction:
+                            isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -199,7 +226,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                             "Presione en el icono \n para ${label[0].toLowerCase()}${label.substring(1)}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: isPortraitMode ? 15 : 20,
                               color: Colors.white,
                             ),
                           )

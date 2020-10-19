@@ -9,3 +9,8 @@ const kUsers = [
   {"correo": "tester@tester.com", "clave": "5555"},
   {"correo": "", "clave": ""},
 ];
+
+const kWarnings = [
+  '¡Están hurtando el dispositivo!',
+  '¡Epa! ¿Qué estás por hacer?'
+];

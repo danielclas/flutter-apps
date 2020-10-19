@@ -22,7 +22,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('images/back.png'),
-                fit: BoxFit.cover,
+                repeat: ImageRepeat.repeat,
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.8), BlendMode.dstATop),
               ),
