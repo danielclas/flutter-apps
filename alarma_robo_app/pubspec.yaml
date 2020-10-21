@@ -24,6 +24,7 @@ dependencies:
   camerawesome: ^0.1.0
   cloud_firestore: "^0.14.0+2"
   alert: ^1.0.1
+  splashscreen:
 
   cupertino_icons: ^0.1.3
 
