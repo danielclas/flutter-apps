@@ -1,0 +1,185 @@
+{
+  "project_info": {
+    "project_number": "545182482367",
+    "firebase_url": "https://pps-apps-aa8cf.firebaseio.com",
+    "project_id": "pps-apps-aa8cf",
+    "storage_bucket": "pps-apps-aa8cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:3d0ed46996a7422aa26b0a",
+        "android_client_info": {
+          "package_name": "com.example.administracion_usuarios_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:cb8329a7dd4734f6a26b0a",
+        "android_client_info": {
+          "package_name": "com.example.alarma_robo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:15ac297355bb1ab8a26b0a",
+        "android_client_info": {
+          "package_name": "com.example.aulas_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:c32b8c74f8467030a26b0a",
+        "android_client_info": {
+          "package_name": "com.example.carga_credito_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:c33f7c41b3ebe435a26b0a",
+        "android_client_info": {
+          "package_name": "com.example.relevamiento_visual_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545182482367:android:53d62abe2bec5905a26b0a",
+        "android_client_info": {
+          "package_name": "com.example.tabla_didactica_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
