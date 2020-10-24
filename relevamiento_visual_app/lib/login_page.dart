@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:relevamiento_visual_app/constants.dart';
 import 'package:relevamiento_visual_app/services/login_service.dart';
+import 'package:relevamiento_visual_app/services/pictures_service.dart';
 import 'home_page.dart';
 import 'package:bordered_text/bordered_text.dart';
 
@@ -32,6 +33,12 @@ class _LoginPageState extends State<LoginPage> {
       //Informo error
       print("Usuario no existe");
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    PictureService.initService();
   }
 
   @override
