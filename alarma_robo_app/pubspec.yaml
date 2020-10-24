@@ -25,6 +25,8 @@ dependencies:
   cloud_firestore: "^0.14.0+2"
   alert: ^1.0.1
   splashscreen:
+  torch_compat: ^1.0.2
+
 
   cupertino_icons: ^0.1.3
 

@@ -14,6 +14,7 @@ import '../services/tts_service.dart';
 import 'dart:ui';
 import 'package:vibration/vibration.dart';
 import 'package:camerawesome/camerawesome_plugin.dart';
+import 'package:torch_compat/torch_compat.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -23,9 +24,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with WidgetsBindingObserver {
-  Color color = Colors.grey;
-  String label = 'Desactivar la alarma';
-  IconData icon = Icons.alarm_off;
+  Color color = Colors.red[500];
+  String label = 'Activar la alarma';
+  IconData icon = Icons.alarm_add;
 
   bool isPortraitMode = false;
 
@@ -46,85 +47,96 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
-    setState(() {
-      if (isPortraitMode) {
-        Tts.speak(kWarnings[0]);
-      } else {
-        Tts.speak(kWarnings[1]);
-        Vibration.vibrate(duration: 5000);
-      }
-
-      isPortraitMode = window.physicalSize.width > window.physicalSize.height;
-    });
+    if (this.color == Colors.grey) {
+      setState(() {
+        isPortraitMode = window.physicalSize.width > window.physicalSize.height;
+        if (isPortraitMode) {
+          TorchCompat.turnOn();
+          Timer(Duration(seconds: 5), () => TorchCompat.turnOff());
+          Tts.speak(kWarnings[0]);
+        } else {
+          Tts.speak(kWarnings[1]);
+          Vibration.vibrate(duration: 5000);
+        }
+      });
+    }
   }
 
   void onTap() {
     setState(() {
-      this.color = this.color == Colors.grey ? Colors.red[500] : Colors.grey;
-      this.label = this.color == Colors.grey
-          ? 'Desactivar la alarma'
-          : 'Activar la alarma';
-      this.icon = this.color == Colors.grey ? Icons.alarm_off : Icons.alarm_add;
-
-      if (this.color != Colors.grey) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            // return object of type Dialog
-            return AlertDialog(
-              backgroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(70),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(70),
+              ),
+            ),
+            title: Text(
+              "Ingrese contraseña",
+              style: TextStyle(color: Colors.white),
+            ),
+            content: TextField(
+              controller: passwordController,
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              decoration: InputDecoration(
+                fillColor: Colors.green,
+                focusColor: Colors.green,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red[500], width: 0.0),
                 ),
-              ),
-              title: Text(
-                "Ingrese contraseña",
-                style: TextStyle(color: Colors.white),
-              ),
-              content: TextField(
-                controller: passwordController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                decoration: InputDecoration(
-                  fillColor: Colors.green,
-                  focusColor: Colors.green,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red[500], width: 0.0),
-                  ),
-                  labelStyle: TextStyle(color: Colors.white70),
-                  labelText: 'Contraseña',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
-                    ),
+                labelStyle: TextStyle(color: Colors.white70),
+                labelText: 'Contraseña',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
                   ),
                 ),
               ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(
-                    "Ingresar",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    print("contraseña");
-                  },
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Ingresar",
+                  style: TextStyle(color: Colors.white),
                 ),
-                FlatButton(
-                  child: Text(
-                    "Cerrar",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                onPressed: () {
+                  setState(() {
+                    if (LoginService.user.clave == passwordController.text) {
+                      this.color = this.color == Colors.grey
+                          ? Colors.red[500]
+                          : Colors.grey;
+                      this.label = this.color == Colors.grey
+                          ? 'Desactivar la alarma'
+                          : 'Activar la alarma';
+                      this.icon = this.color == Colors.grey
+                          ? Icons.alarm_off
+                          : Icons.alarm_add;
+                      Navigator.of(context).pop();
+                    } else {
+                      Alert(message: 'La contraseña ingresada no es correcta')
+                          .show();
+                    }
+                  });
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  "Cerrar",
+                  style: TextStyle(color: Colors.white),
                 ),
-              ],
-            );
-          },
-        );
-      }
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     });
   }
 
