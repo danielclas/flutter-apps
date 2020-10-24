@@ -1,35 +1,104 @@
+import 'package:administracion_usuarios_app/classes/person.dart';
+import 'package:administracion_usuarios_app/components/person_card.dart';
 import 'package:administracion_usuarios_app/screens/login_screen.dart';
+import 'package:administracion_usuarios_app/services/login_service.dart';
+import 'package:administracion_usuarios_app/services/people_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:page_transition/page_transition.dart';
+import 'form_screen.dart';
 
 class Home extends StatefulWidget {
   @override
-  _HometState createState() => _HometState();
+  State<StatefulWidget> createState() {
+    return _HomeState();
+  }
 }
 
-class _HometState extends State<Home> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+class _HomeState extends State<Home> {
+  int index = 0;
+  bool isAdmin;
 
-  void _onItemTapped(int index) {
+  List<BottomNavigationBarItem> barItems;
+  List<Widget> widgets;
+
+  void onItemTapped(int i) {
     setState(() {
-      _selectedIndex = index;
+      index = i;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    PeopleService.init();
+    isAdmin = LoginService.user.correo.contains('admin');
+
+    barItems = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.list),
+        title: Text('Listado'),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.add),
+        title: Text('Cargar'),
+      ),
+    ];
+
+    widgets = [];
+
+    widgets.add(
+      Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/background.png'),
+              repeat: ImageRepeat.repeat),
+        ),
+        child: StreamBuilder(
+          stream: PeopleService.getPeople(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: SpinKitWave(
+                  color: Colors.orange[200],
+                  size: 50,
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) =>
+                    buildListItem(context, snapshot.data.documents[index]),
+              );
+            }
+          },
+        ),
+      ),
+    );
+
+    if (isAdmin) {
+      widgets.add(FormPage());
+    } else {
+      widgets.add(
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('images/background.png'),
+                repeat: ImageRepeat.repeat),
+          ),
+          child: Center(
+            child: Text("Sólo los administradores pueden cargar usuarios"),
+          ),
+        ),
+      );
+    }
+  }
+
+  buildListItem(BuildContext context, DocumentSnapshot document) {
+    Person obj = Person.fromJson(document.data());
+    return PersonCard(obj);
   }
 
   @override
@@ -47,31 +116,21 @@ class _HometState extends State<Home> {
 
         return;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('BottomNavigationBar Sample'),
-        ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('a'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              title: Text('a'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              title: Text('a'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Administración de usuarios'),
+            backgroundColor: Colors.orange[200],
+          ),
+          body: Center(
+            child: widgets.elementAt(index),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: barItems,
+            currentIndex: index,
+            selectedItemColor: Colors.amber[800],
+            onTap: onItemTapped,
+          ),
         ),
       ),
     );

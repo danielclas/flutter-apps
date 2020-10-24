@@ -19,10 +19,6 @@ class LoginService {
         .where('clave', isEqualTo: password)
         .get();
 
-    result.docs.forEach((element) {
-      print(element.data().toString());
-    });
-
     if (result.docs.length >= 1) {
       exists = true;
       user = User.fromJson(result.docs.first.data());

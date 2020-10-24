@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           gradientBackground: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [Color(0xff607d8b), Color(0xffcbcdd9)]),
+              colors: [Colors.orange[200], Color(0xffcbcdd9)]),
           loadingText: Text(
             "Daniel Clas - Administración de usuarios",
             style: TextStyle(fontSize: 30),
