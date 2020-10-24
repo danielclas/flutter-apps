@@ -21,7 +21,7 @@ class PeopleService {
 
     return FirebaseFirestore.instance
         .collection('people')
-        .orderBy('nombre', descending: true)
+        .orderBy('correo', descending: true)
         .snapshots();
   }
 }
