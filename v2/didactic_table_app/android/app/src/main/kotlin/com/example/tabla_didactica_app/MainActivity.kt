@@ -1,4 +1,4 @@
-package danielclas.didactic_table_app
+package com.example.tabla_didactica_app
 
 import io.flutter.embedding.android.FlutterActivity
 
