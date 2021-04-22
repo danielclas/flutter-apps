@@ -12,9 +12,17 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String message;
   @override
   void initState() {
     super.initState();
+  }
+
+  void messagesStream() async {
+    await for (var s
+        in FirebaseService.firestore.collection('messages').snapshots()) {
+      for (var m in s.docs) print(m.data());
+    }
   }
 
   @override
@@ -26,8 +34,9 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                FirebaseService.auth.signOut();
-                Navigator.pop(context);
+                //FirebaseService.auth.signOut();
+                //Navigator.pop(context);
+                messagesStream();
               }),
         ],
         title: Text('⚡️Chat'),
@@ -46,14 +55,18 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        message = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      final user = FirebaseService.loggedInUser;
+                      FirebaseService.firestore.collection('messages').add({
+                        'text': message,
+                        'sender': FirebaseService.loggedInUser.email
+                      });
                     },
                     child: Text(
                       'Send',

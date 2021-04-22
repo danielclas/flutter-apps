@@ -1,0 +1,5 @@
+class Message {
+  Message() {
+    print("");
+  }
+}

@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseService {
-  static FirebaseAuth _auth = FirebaseAuth.instance;
   static FirebaseService _instance = FirebaseService._constructor();
 
-  static get auth => _auth;
+  static get auth => FirebaseAuth.instance;
+  static FirebaseFirestore get firestore => FirebaseFirestore.instance;
   static get instance => _instance;
-  static get loggedInUser => _auth.currentUser;
+  static User get loggedInUser => auth.currentUser;
 
   FirebaseService._constructor();
 
