@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'login_screen.dart';
@@ -16,9 +17,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   AnimationController ctrl;
   Animation animation;
 
+  void init() async {
+    await Firebase.initializeApp();
+  }
+
   @override
   void initState() {
     super.initState();
+    init();
     ctrl = AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation =
         ColorTween(begin: Colors.blueGrey, end: Colors.white).animate(ctrl);
