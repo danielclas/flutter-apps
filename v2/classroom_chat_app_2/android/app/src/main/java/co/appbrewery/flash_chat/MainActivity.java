@@ -1,4 +1,4 @@
-package co.appbrewery.flash_chat;
+package com.danielclas.classroom_chat_app;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
