@@ -17,14 +17,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   AnimationController ctrl;
   Animation animation;
 
-  void init() async {
-    await Firebase.initializeApp();
-  }
-
   @override
   void initState() {
     super.initState();
-    init();
     ctrl = AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation =
         ColorTween(begin: Colors.blueGrey, end: Colors.white).animate(ctrl);
@@ -60,7 +55,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                 ),
                 TypewriterAnimatedTextKit(
-                  //TODO: Implement typewriter effect from animated text
                   text: ['Aulas Chat'],
                   textStyle: TextStyle(
                     fontSize: 45.0,
