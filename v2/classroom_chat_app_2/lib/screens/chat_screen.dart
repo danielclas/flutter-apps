@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final textController = TextEditingController();
   String message;
   @override
   void initState() {
@@ -47,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            MessagesStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -54,6 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: textController,
                       onChanged: (value) {
                         message = value;
                       },
@@ -67,6 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         'text': message,
                         'sender': FirebaseService.loggedInUser.email
                       });
+                      textController.clear();
                     },
                     child: Text(
                       'Send',
@@ -78,6 +83,72 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessagesStream extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseService.firestore.collection('messages').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final messages = snapshot.data.docs;
+          List<MessageBubble> messageBubbles = [];
+          for (var m in messages) {
+            final text = m.data()['text'];
+            final sender = m.data()['sender'];
+            final widget = MessageBubble(text: text, sender: sender);
+            messageBubbles.add(widget);
+          }
+          return Expanded(
+              child: ListView(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  children: messageBubbles));
+        }
+        return Center(
+            child: CircularProgressIndicator(
+          backgroundColor: Colors.lightBlueAccent,
+        ));
+      },
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  MessageBubble({this.text, this.sender});
+
+  final String text, sender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            sender,
+            style: TextStyle(fontSize: 12, color: Colors.black54),
+          ),
+          Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  bottomLeft: Radius.circular(30.0),
+                  bottomRight: Radius.circular(30.0)),
+              color: Colors.lightBlueAccent,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  '$text from $sender',
+                  style: TextStyle(color: Colors.white, fontSize: 15.0),
+                ),
+              )),
+        ],
       ),
     );
   }
