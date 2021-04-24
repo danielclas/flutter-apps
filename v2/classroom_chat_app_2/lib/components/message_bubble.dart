@@ -1,20 +1,19 @@
+import 'package:flash_chat/models/message_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.text, this.sender, this.isFromCurrentUser});
+  MessageBubble({this.message});
 
-  final String text, sender;
-  final bool isFromCurrentUser;
+  final Message message;
+  final String text = "", sender = "";
+  final bool isFromCurrentUser = true;
 
   BorderRadiusGeometry getRadiusGeometry() {
     Radius topRight = Radius.circular(this.isFromCurrentUser ? 0 : 30.0);
     Radius topLeft = Radius.circular(this.isFromCurrentUser ? 30.0 : 0);
     return BorderRadius.only(
-        topLeft: topLeft,
-        topRight: topRight,
-        bottomLeft: Radius.circular(30.0),
-        bottomRight: Radius.circular(30.0));
+        topLeft: topLeft, topRight: topRight, bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0));
   }
 
   @override
@@ -22,9 +21,7 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Column(
-        crossAxisAlignment: isFromCurrentUser
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
+        crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender,

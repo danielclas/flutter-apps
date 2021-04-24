@@ -1,3 +1,5 @@
+import 'package:flash_chat/screens/home_screen.dart';
+import 'package:flash_chat/screens/welcome_screen_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
@@ -18,11 +20,12 @@ void main() async {
 class ClassroomChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: WelcomeScreen.id, routes: {
-      WelcomeScreen.id: (context) => WelcomeScreen(),
+    return MaterialApp(initialRoute: HomeScreen.id, routes: {
+      WelcomeScreen2.id: (context) => WelcomeScreen2(),
       LoginScreen.id: (context) => LoginScreen(),
       RegistrationScreen.id: (context) => RegistrationScreen(),
-      ChatScreen.id: (context) => ChatScreen()
+      ChatScreen.id: (context) => ChatScreen(),
+      HomeScreen.id: (context) => HomeScreen()
     });
   }
 }

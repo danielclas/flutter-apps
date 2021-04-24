@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 import '../components/rounded_button.dart';
@@ -51,18 +52,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   child: Hero(
                     tag: 'logo',
                     child: Container(
-                      child: Image.asset('images/logo.png'),
+                      child: SvgPicture.asset(
+                        'images/main-graphic.svg',
+                        semanticsLabel: 'Main Graphic',
+                        height: 300.0,
+                        width: 200.0,
+                      ),
                       height: 60,
                     ),
                   ),
-                ),
-                TypewriterAnimatedTextKit(
-                  text: ['Aulas Chat'],
-                  textStyle: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                  speed: Duration(milliseconds: 100),
                 ),
               ],
             ),
