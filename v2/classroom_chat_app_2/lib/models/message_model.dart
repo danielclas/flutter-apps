@@ -15,6 +15,6 @@ class Message {
   Map<String, dynamic> toJson() => {
         'content': content,
         'timestamp': timestamp,
-        'user': sender,
+        'sender': sender,
       };
 }

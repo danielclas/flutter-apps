@@ -1,13 +1,19 @@
 import 'package:flash_chat/models/message_model.dart';
+import 'package:flash_chat/services/firebase_service.dart';
+import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class MessageBubble extends StatelessWidget {
   MessageBubble({this.message});
 
   final Message message;
-  final String text = "", sender = "";
-  final bool isFromCurrentUser = true;
+  bool isFromCurrentUser = true;
+
+  formatSender() => this.message.sender.toString().substring(0, this.message.sender.indexOf('@'));
+  formatTime() => DateFormat('HH:mm').format(message.timestamp.toDate());
 
   BorderRadiusGeometry getRadiusGeometry() {
     Radius topRight = Radius.circular(this.isFromCurrentUser ? 0 : 30.0);
@@ -18,24 +24,33 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    isFromCurrentUser = FirebaseService.loggedInUser.email == message.sender;
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       child: Column(
         crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(
-            sender,
-            style: TextStyle(fontSize: 12, color: Colors.black54),
-          ),
           Material(
               elevation: 5.0,
               borderRadius: getRadiusGeometry(),
-              color: Colors.lightBlueAccent,
+              color: isFromCurrentUser ? HexColor("28b5b5") : HexColor("8fd9a8"),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                child: Text(
-                  '$text from $sender',
-                  style: TextStyle(color: Colors.white, fontSize: 15.0),
+                child: Column(
+                  crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${formatSender()} | ${formatTime()}",
+                      style: TextStyle(fontSize: 13, color: Colors.black54),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 5),
+                      child: Text(
+                        '${message.content}',
+                        style: TextStyle(color: Colors.white, fontSize: 15.0),
+                      ),
+                    )
+                  ],
                 ),
               )),
         ],

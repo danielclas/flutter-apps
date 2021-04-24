@@ -2,7 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/components/login_register_component.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class WelcomeScreen2 extends StatefulWidget {
@@ -40,14 +40,12 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.width * 0.6),
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.6),
                   child: Container(
                       decoration: new BoxDecoration(
                         color: HexColor("8fd9a8"),
                         borderRadius: BorderRadius.vertical(
-                            bottom: Radius.elliptical(
-                                MediaQuery.of(context).size.width * 0.7, 150)),
+                            bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
                       ),
                       height: MediaQuery.of(context).size.height * 0.5),
                 ),
@@ -55,14 +53,13 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.only(top: 45, bottom: 15, left: 15, right: 15),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.height * 0.04),
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.04),
                     child: Column(
                       children: [
                         TypewriterAnimatedTextKit(
@@ -88,10 +85,11 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
                         children: [
                           Hero(
                             tag: "graphic",
-                            child: SvgPicture.asset(
-                              'images/main-graphic.svg',
-                              semanticsLabel: 'Main Graphic',
+                            child: Image(
                               width: MediaQuery.of(context).size.width * 0.4,
+                              image: Svg(
+                                'images/main-graphic.svg',
+                              ),
                             ),
                           ),
                         ],

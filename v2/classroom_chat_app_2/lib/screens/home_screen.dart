@@ -9,7 +9,7 @@ import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: selected == -1 ? Colors.grey : HexColor("28b5b5"),
                       onPressed: () {
                         showSpinner = false;
-                        Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom-a");
+                        Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom_a");
                       },
                     ),
                   ),
@@ -185,11 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Hero(
                             tag: "graphic",
-                            child: SvgPicture.asset(
-                              'images/main-graphic.svg',
-                              semanticsLabel: 'Main Graphic',
-                              width: MediaQuery.of(context).size.width * 0.4,
-                            ),
+                            child: Image(
+                                width: MediaQuery.of(context).size.width * 0.4, image: Svg('images/main-graphic.svg')),
                           ),
                         ],
                       ),
