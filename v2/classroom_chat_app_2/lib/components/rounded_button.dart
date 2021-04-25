@@ -5,8 +5,9 @@ class RoundedButton extends StatelessWidget {
   final Color color;
   final String text;
   final Function onPressed;
+  final double minWidth;
 
-  RoundedButton({this.text, this.color, @required this.onPressed});
+  RoundedButton({this.text, this.color, @required this.onPressed, this.minWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class RoundedButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
         onPressed: this.onPressed,
-        minWidth: 300.0,
+        minWidth: minWidth,
         height: 42.0,
         child: Text(text, style: TextStyle(color: Colors.white)),
       ),

@@ -18,6 +18,7 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
@@ -65,7 +66,7 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
                         TypewriterAnimatedTextKit(
                           text: ['¡Bienvenid@!'],
                           textStyle: TextStyle(
-                            fontSize: 30.0,
+                            fontSize: 40.0,
                           ),
                           speed: Duration(milliseconds: 100),
                         ),
@@ -79,13 +80,14 @@ class _WelcomeScreen2State extends State<WelcomeScreen2> {
                       child: LoginRegisterComponent()),
                   Container(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 40),
+                      padding: EdgeInsets.only(top: 30, bottom: 30),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Hero(
                             tag: "graphic",
                             child: Image(
+                              height: MediaQuery.of(context).size.height * 0.2,
                               width: MediaQuery.of(context).size.width * 0.4,
                               image: Svg(
                                 'images/main-graphic.svg',

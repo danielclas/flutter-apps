@@ -20,7 +20,6 @@ final kMessageContainerDecoration = BoxDecoration(
 );
 
 final InputDecoration kTextFieldDecoration = InputDecoration(
-  hintText: 'Enter a value',
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -30,9 +29,18 @@ final InputDecoration kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.black.withOpacity(0.3), width: 2.0),
+    borderSide: BorderSide(color: HexColor('d2e69c'), width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
 
 enum classroom { a, b }
+
+const kUsers = [
+  {"email": "", "password": ""},
+  {"email": "admin@admin.com", "password": "1111"},
+  {"email": "invitado@invitado.com", "password": "2222"},
+  {"email": "usuario@usuario.com", "password": "3333"},
+  {"email": "anonimo@anonimo.com", "password": "4444"},
+  {"email": "tester@tester.com", "password": "5555"},
+];

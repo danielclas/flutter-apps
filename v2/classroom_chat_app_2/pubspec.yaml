@@ -19,6 +19,7 @@ dependencies:
   animated_widgets: ^1.0.6
   intl: ^0.17.0
   flutter_svg_provider:
+  email_validator: ^2.0.1
 
 dev_dependencies:
   flutter_test:

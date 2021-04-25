@@ -37,4 +37,9 @@ class DateParser {
     }
     return '${DateFormat('dd').format(date)} de ${Months[date.month]} de ${date.year}';
   }
+
+  static areDifferentDay(DateTime a, DateTime b) {
+    if (a == null || b == null) return true;
+    return a.year != b.year || a.month != b.month || a.day != b.day;
+  }
 }

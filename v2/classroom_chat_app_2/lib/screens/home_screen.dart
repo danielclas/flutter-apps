@@ -86,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(15.0),
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.04),
@@ -100,6 +99,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           speed: Duration(milliseconds: 100),
                         ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 30),
+                    child: Hero(
+                      tag: "graphic",
+                      child: Image(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          image: Svg('images/main-graphic.svg')),
                     ),
                   ),
                   Row(
@@ -169,29 +178,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: RoundedButton(
+                      minWidth: 300,
                       text: 'Entrar al chat',
                       color: selected == -1 ? Colors.grey : HexColor("28b5b5"),
-                      onPressed: () {
-                        showSpinner = false;
-                        Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom_a");
-                      },
+                      onPressed: selected == -1
+                          ? null
+                          : () {
+                              showSpinner = false;
+                              Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom_a");
+                            },
                     ),
                   ),
-                  Container(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 40),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Hero(
-                            tag: "graphic",
-                            child: Image(
-                                width: MediaQuery.of(context).size.width * 0.4, image: Svg('images/main-graphic.svg')),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

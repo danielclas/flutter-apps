@@ -17,12 +17,32 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final textController = TextEditingController();
+  ScrollController controller = ScrollController();
   ChatService chatService;
+  bool showFab = false;
 
   submitMessage() {
     chatService.addMessage(
         Message(content: textController.text, sender: FirebaseService.loggedInUser.email, timestamp: Timestamp.now()));
     textController.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      if (controller.position.atEdge) {
+        if (controller.position.pixels != 0) {
+          setState(() {
+            showFab = false;
+          });
+        }
+      } else {
+        setState(() {
+          showFab = true;
+        });
+      }
+    });
   }
 
   @override
@@ -37,6 +57,26 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text('Aula ${collection.substring(collection.indexOf('_') + 1).toUpperCase()}'),
         backgroundColor: HexColor("8fd9a8"),
         shadowColor: Colors.transparent,
+      ),
+      floatingActionButton: Positioned(
+        bottom: 50.0,
+        right: 5.0,
+        child: Visibility(
+          visible: showFab,
+          child: FloatingActionButton(
+            backgroundColor: Colors.teal[300],
+            heroTag: 'scroll',
+            onPressed: () {
+              setState(() {
+                showFab = false;
+
+                controller.animateTo(controller.position.maxScrollExtent,
+                    duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+              });
+            },
+            child: Icon(Icons.keyboard_arrow_down),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Container(
