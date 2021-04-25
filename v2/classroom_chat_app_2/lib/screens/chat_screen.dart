@@ -56,8 +56,9 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         title: Text('Aula ${collection.substring(collection.indexOf('_') + 1).toUpperCase()}'),
         backgroundColor: HexColor("8fd9a8"),
-        shadowColor: Colors.transparent,
+        shadowColor: Colors.black,
       ),
+      /*
       floatingActionButton: Positioned(
         bottom: 50.0,
         right: 5.0,
@@ -77,7 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Icon(Icons.keyboard_arrow_down),
           ),
         ),
-      ),
+      ),*/
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(

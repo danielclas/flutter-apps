@@ -47,7 +47,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
       height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.8,
       child: Padding(
-        padding: const EdgeInsets.only(right: 12, left: 12, top: 25),
+        padding: const EdgeInsets.only(right: 12, left: 12, top: 1),
         child: Form(
           key: formKey,
           onChanged: () => formStatusText = '',
@@ -55,7 +55,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 15, bottom: 8),
                 child: Center(child: Text("Ingrese o regístrese aquí")),
               ),
               Padding(
@@ -63,6 +63,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: TextFormField(
                     textAlign: TextAlign.center,
                     controller: emailController,
+                    onChanged: (value) => setState(() => formStatusText = ''),
                     validator: (value) => EmailValidator.validate(value) ? null : "",
                     keyboardType: TextInputType.emailAddress,
                     decoration: kTextFieldDecoration.copyWith(
@@ -76,6 +77,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                   child: TextFormField(
                       textAlign: TextAlign.center,
                       controller: passwordController,
+                      onChanged: (value) => setState(() => formStatusText = ''),
                       validator: (value) => value == null || value.length < 4 ? "P" : null,
                       obscureText: true,
                       keyboardType: TextInputType.emailAddress,
@@ -87,7 +89,11 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Center(child: Text(formStatusText)),
+                child: Center(
+                    child: Text(
+                  formStatusText,
+                  style: TextStyle(color: Colors.redAccent),
+                )),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -102,29 +108,27 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
 
                     setState(() => showSpinner = true);
                     try {
-                      UserCredential user = await FirebaseService.auth.signInWithEmailAndPassword(
-                          email: emailController.value.text, password: passwordController.value.text);
+                      UserCredential user = await FirebaseService.signIn(emailController.text, passwordController.text);
                       if (user != null) {
                         formKey.currentState.reset();
                         Navigator.pushNamed(context, HomeScreen.id);
-                      } else {
-                        formStatusText = 'No fue posible autenticarse';
                       }
 
                       setState(() => showSpinner = false);
                     } catch (e) {
+                      formStatusText = 'No fue posible autenticarse';
                       setState(() => showSpinner = false);
                     }
                   },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8, top: 10),
+                padding: EdgeInsets.only(left: 8, right: 8, top: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RoundedButton(
-                      minWidth: 130,
+                      minWidth: MediaQuery.of(context).size.height * 0.17,
                       text: 'Registrarse',
                       color: HexColor("28b5b5"),
                       onPressed: () async {
@@ -144,7 +148,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                       },
                     ),
                     RoundedButton(
-                      minWidth: 130,
+                      minWidth: MediaQuery.of(context).size.height * 0.17,
                       text: 'Usuarios',
                       color: HexColor("28b5b5"),
                       onPressed: () => switchUser(),

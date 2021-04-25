@@ -38,9 +38,9 @@ enum classroom { a, b }
 
 const kUsers = [
   {"email": "", "password": ""},
-  {"email": "admin@admin.com", "password": "1111"},
-  {"email": "invitado@invitado.com", "password": "2222"},
-  {"email": "usuario@usuario.com", "password": "3333"},
-  {"email": "anonimo@anonimo.com", "password": "4444"},
-  {"email": "tester@tester.com", "password": "5555"},
+  {"email": "admin@admin.com", "password": "123456"},
+  {"email": "invitado@invitado.com", "password": "123456"},
+  {"email": "usuario@usuario.com", "password": "123456"},
+  {"email": "anonimo@anonimo.com", "password": "123456"},
+  {"email": "tester@tester.com", "password": "123456"},
 ];

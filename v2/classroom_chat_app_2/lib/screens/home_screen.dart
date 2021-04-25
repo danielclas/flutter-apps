@@ -40,6 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  formatUser() =>
+      '\n${FirebaseService.loggedInUser.email.substring(0, FirebaseService.loggedInUser.email.indexOf('@'))}!';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,18 +90,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.04),
-                    child: Column(
-                      children: [
-                        TypewriterAnimatedTextKit(
-                          text: ['Bienvenid@, ${FirebaseService.loggedInUser.email.substring(0, 5)}'],
-                          textStyle: TextStyle(
-                            fontSize: 30.0,
-                          ),
-                          speed: Duration(milliseconds: 100),
-                        ),
-                      ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    child: TypewriterAnimatedTextKit(
+                      text: ['Bienvenid@, ${formatUser()}'],
+                      textStyle: TextStyle(
+                        fontSize: 30.0,
+                      ),
+                      speed: Duration(milliseconds: 100),
                     ),
                   ),
                   Container(
@@ -185,7 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? null
                           : () {
                               showSpinner = false;
-                              Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom_a");
+                              Navigator.pushNamed(context, ChatScreen.id,
+                                  arguments: "classroom_${selected == 0 ? 'a' : 'b'}");
                             },
                     ),
                   ),

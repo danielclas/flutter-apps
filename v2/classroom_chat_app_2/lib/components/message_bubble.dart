@@ -12,7 +12,8 @@ class MessageBubble extends StatelessWidget {
   final Message message;
   bool isFromCurrentUser = true;
 
-  formatSender() => this.message.sender.toString().substring(0, this.message.sender.indexOf('@'));
+  formatSender() =>
+      isFromCurrentUser ? '' : '${this.message.sender.toString().substring(0, this.message.sender.indexOf('@'))} |';
   formatTime() => DateFormat('HH:mm').format(message.timestamp.toDate());
 
   BorderRadiusGeometry getRadiusGeometry() {
@@ -25,6 +26,7 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     isFromCurrentUser = FirebaseService.loggedInUser.email == message.sender;
+    print(message.toJson());
     return Padding(
       padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       child: Column(
@@ -40,7 +42,7 @@ class MessageBubble extends StatelessWidget {
                   crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${formatSender()} | ${formatTime()}",
+                      "${formatSender()} ${formatTime()}",
                       style: TextStyle(fontSize: 13, color: Colors.black54),
                     ),
                     Padding(

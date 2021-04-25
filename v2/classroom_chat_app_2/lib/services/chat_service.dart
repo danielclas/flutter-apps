@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flash_chat/models/message_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'firebase_service.dart';
