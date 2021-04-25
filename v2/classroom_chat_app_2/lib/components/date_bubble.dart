@@ -1,7 +1,5 @@
 import 'package:flash_chat/utils/date_parser.dart';
-import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DateBubble extends StatelessWidget {
   DateBubble({this.date});

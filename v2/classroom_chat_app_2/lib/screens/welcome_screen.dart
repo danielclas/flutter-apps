@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/components/login_register_component.dart';
-import 'package:flash_chat/services/chat_service.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -52,8 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: Container(
                       decoration: new BoxDecoration(
                         color: HexColor("8fd9a8"),
-                        borderRadius: BorderRadius.vertical(
-                            bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
+                        borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
                       ),
                       height: MediaQuery.of(context).size.height * 0.5),
                 ),
@@ -80,11 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ],
                     ),
                   ),
-                  Material(
-                      elevation: 20,
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                      color: Colors.white,
-                      child: LoginRegisterComponent()),
+                  Material(elevation: 20, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white, child: LoginRegisterComponent()),
                   Container(
                     child: Padding(
                       padding: EdgeInsets.only(top: 30, bottom: MediaQuery.of(context).size.height * 0.01),

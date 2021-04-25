@@ -1,21 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/models/message_model.dart';
-import 'package:flash_chat/services/chat_service.dart';
-import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flash_chat/utils/date_parser.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'date_bubble.dart';
 import 'message_bubble.dart';
 
-class MessagesStream extends StatelessWidget {
-  ChatService chatService;
-  DateTime previousDate;
+class MessagesStream {
+  static DateTime previousDate;
 
-  MessagesStream({@required this.chatService});
-
-  List buildListItem(DocumentSnapshot document) {
+  static List buildListItem(DocumentSnapshot document) {
     Message obj = Message.fromJson(document.data());
     final list = [];
     if (DateParser.areDifferentDay(obj.timestamp.toDate(), previousDate)) {
@@ -25,29 +18,5 @@ class MessagesStream extends StatelessWidget {
 
     list.add(MessageBubble(message: obj));
     return list;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: chatService.getMessages(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final messages = snapshot.data.docs;
-          final list = <Widget>[];
-          for (var m in messages) {
-            final temp = buildListItem(m);
-            for (var t in temp) list.add(t);
-          }
-          previousDate = null;
-          return Expanded(
-              child: ListView(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0), children: list));
-        }
-        return Center(
-            child: CircularProgressIndicator(
-          backgroundColor: Colors.lightBlueAccent,
-        ));
-      },
-    );
   }
 }

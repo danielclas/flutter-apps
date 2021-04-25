@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:flash_chat/constants.dart';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:flash_chat/components/rounded_button.dart';
@@ -40,8 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  formatUser() =>
-      '\n${FirebaseService.loggedInUser.email.substring(0, FirebaseService.loggedInUser.email.indexOf('@'))}!';
+  formatUser() {
+    final user = FirebaseService.loggedInUser.email;
+
+    return '\n${user[0].toUpperCase()}${user.substring(1, user.indexOf('@'))}!';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                       decoration: new BoxDecoration(
                         color: HexColor("8fd9a8"),
-                        borderRadius: BorderRadius.vertical(
-                            bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
+                        borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
                       ),
                       height: MediaQuery.of(context).size.height * 0.5),
                 ),
@@ -127,8 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
-                                      border: Border.all(
-                                          width: 5, color: selected == 0 ? HexColor("d2e69c") : Colors.transparent)),
+                                      border: Border.all(width: 5, color: selected == 0 ? HexColor("d2e69c") : Colors.transparent)),
                                   height: MediaQuery.of(context).size.height * 0.2,
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   child: Center(
@@ -152,8 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
-                                      border: Border.all(
-                                          width: 5, color: selected == 1 ? HexColor("d2e69c") : Colors.transparent)),
+                                      border: Border.all(width: 5, color: selected == 1 ? HexColor("d2e69c") : Colors.transparent)),
                                   height: MediaQuery.of(context).size.height * 0.2,
                                   width: MediaQuery.of(context).size.width * 0.4,
                                   child: Center(
@@ -166,9 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * 0.05,
-                        bottom: MediaQuery.of(context).size.height * 0.03),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05, bottom: MediaQuery.of(context).size.height * 0.03),
                     child: Text(
                       'Seleccione un aula para continuar',
                       style: TextStyle(fontSize: 18),
@@ -184,8 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? null
                           : () {
                               showSpinner = false;
-                              Navigator.pushNamed(context, ChatScreen.id,
-                                  arguments: "classroom_${selected == 0 ? 'a' : 'b'}");
+                              Navigator.pushNamed(context, ChatScreen.id, arguments: "classroom_${selected == 0 ? 'a' : 'b'}");
                             },
                     ),
                   ),

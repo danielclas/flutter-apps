@@ -1,7 +1,7 @@
+import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/rounded_button.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/home_screen.dart';
 import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flash_chat/utils/hex_color.dart';
@@ -15,14 +15,14 @@ class LoginRegisterComponent extends StatefulWidget {
 }
 
 class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
-  bool showSpinner = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   int userIndex = 0;
-  String userEmail;
-  String userPassword;
   String formStatusText = '';
+  Color formStatusTextColor = Colors.redAccent;
+  Widget loginChild;
+  Widget registerChild;
 
   switchUser() {
     setState(() {
@@ -31,7 +31,60 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
       emailController.text = kUsers[userIndex]['email'];
       passwordController.text = kUsers[userIndex]['password'];
       formStatusText = '';
+      formStatusTextColor = Colors.redAccent;
+      loginChild = null;
+      registerChild = null;
     });
+  }
+
+  register() async {
+    if (!formKey.currentState.validate()) {
+      return setState(() => formStatusText = 'El correo o la contraseña no son válidos');
+    }
+    setState(() => registerChild = CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          strokeWidth: 2,
+        ));
+    try {
+      UserCredential user = await FirebaseService.register(emailController.text, passwordController.text);
+      if (user != null) {
+        setState(() => registerChild = Icon(Icons.check, color: Colors.white));
+        formStatusTextColor = Colors.green;
+        formStatusText = 'Usuario registrado exitosamente';
+        Timer(Duration(seconds: 2), () {
+          setState(() => registerChild = null);
+        });
+      }
+    } catch (e) {
+      formStatusText = 'No fue posible registrarse';
+      setState(() => registerChild = null);
+    }
+  }
+
+  login() async {
+    if (!formKey.currentState.validate()) {
+      return setState(() => formStatusText = 'El correo o la contraseña no son válidos');
+    }
+
+    setState(() => loginChild = CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          strokeWidth: 2,
+        ));
+
+    try {
+      UserCredential user = await FirebaseService.signIn(emailController.text, passwordController.text);
+      if (user != null) {
+        setState(() => loginChild = Icon(Icons.check, color: Colors.white));
+        formKey.currentState.reset();
+        Navigator.pushNamed(context, HomeScreen.id);
+        Timer(Duration(seconds: 2), () {
+          setState(() => loginChild = null);
+        });
+      }
+    } catch (e) {
+      formStatusText = 'No fue posible autenticarse';
+      setState(() => loginChild = null);
+    }
   }
 
   @override
@@ -39,6 +92,15 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
     super.initState();
     emailController.text = kUsers[userIndex]['email'];
     passwordController.text = kUsers[userIndex]['password'];
+    loginChild = null;
+    registerChild = null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    loginChild = null;
+    registerChild = null;
   }
 
   @override
@@ -67,9 +129,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                     validator: (value) => EmailValidator.validate(value) ? null : "",
                     keyboardType: TextInputType.emailAddress,
                     decoration: kTextFieldDecoration.copyWith(
-                        labelText: 'Correo',
-                        labelStyle: TextStyle(color: Colors.black54),
-                        errorStyle: TextStyle(height: 0))),
+                        labelText: 'Correo', labelStyle: TextStyle(color: Colors.black54), errorStyle: TextStyle(height: 0))),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 25),
@@ -92,7 +152,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: Center(
                     child: Text(
                   formStatusText,
-                  style: TextStyle(color: Colors.redAccent),
+                  style: TextStyle(color: formStatusTextColor),
                 )),
               ),
               Padding(
@@ -101,25 +161,8 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                   minWidth: 300,
                   text: 'Ingresar',
                   color: HexColor("8fd9a8"),
-                  onPressed: () async {
-                    if (!formKey.currentState.validate()) {
-                      return setState(() => formStatusText = 'El correo o la contraseña no son válidos');
-                    }
-
-                    setState(() => showSpinner = true);
-                    try {
-                      UserCredential user = await FirebaseService.signIn(emailController.text, passwordController.text);
-                      if (user != null) {
-                        formKey.currentState.reset();
-                        Navigator.pushNamed(context, HomeScreen.id);
-                      }
-
-                      setState(() => showSpinner = false);
-                    } catch (e) {
-                      formStatusText = 'No fue posible autenticarse';
-                      setState(() => showSpinner = false);
-                    }
-                  },
+                  onPressed: login,
+                  child: loginChild,
                 ),
               ),
               Padding(
@@ -131,21 +174,8 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                       minWidth: MediaQuery.of(context).size.height * 0.17,
                       text: 'Registrarse',
                       color: HexColor("28b5b5"),
-                      onPressed: () async {
-                        setState(() => showSpinner = true);
-                        try {
-                          UserCredential user =
-                              await FirebaseService.auth.signInWithEmailAndPassword(email: "", password: "");
-                          if (user != null) {
-                            Navigator.pushNamed(context, ChatScreen.id);
-                          } else {
-                            formStatusText = 'No fue posible registrarse';
-                          }
-                          setState(() => showSpinner = false);
-                        } catch (e) {
-                          setState(() => showSpinner = false);
-                        }
-                      },
+                      onPressed: register,
+                      child: registerChild,
                     ),
                     RoundedButton(
                       minWidth: MediaQuery.of(context).size.height * 0.17,
