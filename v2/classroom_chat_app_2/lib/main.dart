@@ -14,8 +14,10 @@ void main() async {
 class ClassroomChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        initialRoute: WelcomeScreen.id,
-        routes: {WelcomeScreen.id: (context) => WelcomeScreen(), ChatScreen.id: (context) => ChatScreen(), HomeScreen.id: (context) => HomeScreen()});
+    return MaterialApp(initialRoute: WelcomeScreen.id, routes: {
+      WelcomeScreen.id: (context) => WelcomeScreen(),
+      ChatScreen.id: (context) => ChatScreen(),
+      HomeScreen.id: (context) => HomeScreen()
+    });
   }
 }

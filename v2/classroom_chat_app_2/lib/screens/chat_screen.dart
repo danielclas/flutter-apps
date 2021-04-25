@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   static final String id = "ChatScreen";
+  static ScrollController controller = ScrollController();
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -18,12 +19,14 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final textController = TextEditingController();
-  ScrollController controller = ScrollController();
   ChatService chatService;
   bool showFab = false;
 
   submitMessage() {
-    chatService.addMessage(Message(content: textController.text, sender: FirebaseService.loggedInUser.email, timestamp: Timestamp.now()));
+    chatService.addMessage(Message(
+        content: textController.text,
+        sender: FirebaseService.loggedInUser.email,
+        timestamp: Timestamp.now()));
     textController.clear();
   }
 
@@ -32,7 +35,8 @@ class _ChatScreenState extends State<ChatScreen> {
     Timer(
       Duration(milliseconds: duration),
       () {
-        controller.animateTo(controller.position.maxScrollExtent, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+        ChatScreen.controller.animateTo(ChatScreen.controller.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
       },
     );
   }
@@ -40,8 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    controller.addListener(() {
-      if (controller.position.atEdge && controller.position.pixels != 0) {
+    ChatScreen.controller.addListener(() {
+      if (ChatScreen.controller.position.atEdge && ChatScreen.controller.position.pixels != 0) {
         setState(() => showFab = false);
       } else if (!showFab) setState(() => showFab = true);
     });
@@ -78,8 +82,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: SafeArea(
         child: Container(
-          decoration:
-              BoxDecoration(image: DecorationImage(scale: 1.5, repeat: ImageRepeat.repeat, image: AssetImage('images/chat-background-2.png'))),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  scale: 1.5, repeat: ImageRepeat.repeat, image: AssetImage('images/chat-background-2.png'))),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,24 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                 stream: chatService.getMessages(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final messages = snapshot.data.docs;
-                    final list = <Widget>[];
-                    for (var m in messages) {
-                      final temp = MessagesStream.buildListItem(m);
-                      for (var t in temp) list.add(t);
-                    }
-                    MessagesStream.previousDate = null;
-                    return ListView(controller: controller, padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0), children: list);
-                  }
-                  return Expanded(
-                    child: Center(
-                        child: CircularProgressIndicator(
-                      backgroundColor: HexColor('d2e69c'),
-                    )),
-                  );
-                },
+                builder: MessagesStream.buildList,
               )),
               Container(
                 decoration: kMessageContainerDecoration,
@@ -117,7 +105,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         maxLines: 1,
                         controller: textController,
                         onChanged: (value) => setState(() {}),
-                        decoration: kMessageTextFieldDecoration.copyWith(hintText: "Ingrese su mensaje", counterText: ''),
+                        decoration: kMessageTextFieldDecoration.copyWith(
+                            hintText: "Ingrese su mensaje", counterText: ''),
                       ),
                     ),
                     FlatButton(

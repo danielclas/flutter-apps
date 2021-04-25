@@ -6,7 +6,7 @@ import 'package:flash_chat/screens/home_screen.dart';
 import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
-
+import '../utils/extension_methods.dart';
 import '../constants.dart';
 
 class LoginRegisterComponent extends StatefulWidget {
@@ -21,10 +21,11 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   int userIndex = 0;
   String formStatusText = '';
   Color formStatusTextColor = Colors.redAccent;
-  Widget loginChild;
-  Widget registerChild;
+  Widget loginChild, registerChild;
 
   switchUser() {
+    //When the 'users' button is pressed, we select a different
+    //user from preset users, and refresh the view
     setState(() {
       formKey.currentState.reset();
       userIndex = userIndex == 5 ? 0 : userIndex + 1;
@@ -106,10 +107,10 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      width: MediaQuery.of(context).size.width * 0.8,
+      height: 50.percentOf(context.height),
+      width: 80.percentOf(context.width),
       child: Padding(
-        padding: const EdgeInsets.only(right: 12, left: 12, top: 1),
+        padding: EdgeInsets.only(right: 3.percentOf(context.width), left: 3.percentOf(context.width)),
         child: Form(
           key: formKey,
           onChanged: () => formStatusText = '',
@@ -117,7 +118,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 8),
+                padding: EdgeInsets.only(top: 4.percentOf(context.width), bottom: 2.percentOf(context.width)),
                 child: Center(child: Text("Ingrese o regístrese aquí")),
               ),
               Padding(
@@ -125,30 +126,40 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: TextFormField(
                     textAlign: TextAlign.center,
                     controller: emailController,
-                    onChanged: (value) => setState(() => formStatusText = ''),
-                    validator: (value) => EmailValidator.validate(value) ? null : "",
+                    onChanged: (value) {
+                      if (formStatusText != '') setState(() => formStatusText = '');
+                    },
+                    validator: (value) => EmailValidator.validate(value) ? null : '',
                     keyboardType: TextInputType.emailAddress,
+                    //ErrorStyle is given height 0 so that textField doesn't show text error
+                    //when invalid, only red outline
                     decoration: kTextFieldDecoration.copyWith(
-                        labelText: 'Correo', labelStyle: TextStyle(color: Colors.black54), errorStyle: TextStyle(height: 0))),
+                        labelText: 'Correo',
+                        labelStyle: TextStyle(color: Colors.black54),
+                        errorStyle: TextStyle(height: 0))),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8, top: 15, bottom: 25),
+                padding: EdgeInsets.only(
+                    left: 2.percentOf(context.width),
+                    right: 2.percentOf(context.width),
+                    top: 2.percentOf(context.height),
+                    bottom: 3.percentOf(context.height)),
                 child: SizedBox(
                   child: TextFormField(
                       textAlign: TextAlign.center,
                       controller: passwordController,
                       onChanged: (value) => setState(() => formStatusText = ''),
-                      validator: (value) => value == null || value.length < 4 ? "P" : null,
+                      validator: (value) => value == null || value.length < 4 ? '' : null,
                       obscureText: true,
                       keyboardType: TextInputType.emailAddress,
                       decoration: kTextFieldDecoration.copyWith(
                           labelText: 'Contraseña',
                           labelStyle: TextStyle(color: Colors.black54),
-                          errorStyle: TextStyle(height: 0, color: Colors.transparent))),
+                          errorStyle: TextStyle(height: 0))),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: EdgeInsets.only(bottom: 4.percentOf(context.width)),
                 child: Center(
                     child: Text(
                   formStatusText,
@@ -156,9 +167,13 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 )),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(
+                    top: 1.percentOf(context.width),
+                    bottom: 1.percentOf(context.width),
+                    left: 2.percentOf(context.width),
+                    right: 2.percentOf(context.width)),
                 child: RoundedButton(
-                  minWidth: 300,
+                  minWidth: 80.percentOf(context.width),
                   text: 'Ingresar',
                   color: HexColor("8fd9a8"),
                   onPressed: login,
@@ -166,22 +181,25 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 8, right: 8, top: 5),
+                padding: EdgeInsets.only(
+                    left: 2.percentOf(context.width),
+                    right: 2.percentOf(context.width),
+                    top: 1.percentOf(context.width)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RoundedButton(
-                      minWidth: MediaQuery.of(context).size.height * 0.17,
+                      minWidth: 17.percentOf(context.height),
                       text: 'Registrarse',
                       color: HexColor("28b5b5"),
                       onPressed: register,
                       child: registerChild,
                     ),
                     RoundedButton(
-                      minWidth: MediaQuery.of(context).size.height * 0.17,
+                      minWidth: 17.percentOf(context.height),
                       text: 'Usuarios',
                       color: HexColor("28b5b5"),
-                      onPressed: () => switchUser(),
+                      onPressed: switchUser,
                     ),
                   ],
                 ),
