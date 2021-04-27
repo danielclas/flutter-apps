@@ -22,6 +22,11 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   String formStatusText = '';
   Color formStatusTextColor = Colors.redAccent;
   Widget loginChild, registerChild;
+  final Widget spinner = CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+    strokeWidth: 2,
+  );
+  final Widget checkIcon = Icon(Icons.check, color: Colors.white);
 
   switchUser() {
     //When the 'users' button is pressed, we select a different
@@ -42,14 +47,11 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
     if (!formKey.currentState.validate()) {
       return setState(() => formStatusText = 'El correo o la contraseña no son válidos');
     }
-    setState(() => registerChild = CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          strokeWidth: 2,
-        ));
+    setState(() => registerChild = spinner);
     try {
       UserCredential user = await FirebaseService.register(emailController.text, passwordController.text);
       if (user != null) {
-        setState(() => registerChild = Icon(Icons.check, color: Colors.white));
+        setState(() => registerChild = checkIcon);
         formStatusTextColor = Colors.green;
         formStatusText = 'Usuario registrado exitosamente';
         Timer(Duration(seconds: 2), () {
@@ -67,17 +69,20 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
       return setState(() => formStatusText = 'El correo o la contraseña no son válidos');
     }
 
-    setState(() => loginChild = CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          strokeWidth: 2,
-        ));
+    setState(() => loginChild = spinner);
 
     try {
       UserCredential user = await FirebaseService.signIn(emailController.text, passwordController.text);
       if (user != null) {
-        setState(() => loginChild = Icon(Icons.check, color: Colors.white));
+        setState(() => loginChild = checkIcon);
         formKey.currentState.reset();
-        Navigator.pushNamed(context, HomeScreen.id);
+        Navigator.pushNamed(context, HomeScreen.id).then((_) {
+          //This is done so that when we pop from the next screen,
+          //form is clean
+          emailController.clear();
+          passwordController.clear();
+          userIndex = 0;
+        });
         Timer(Duration(seconds: 2), () {
           setState(() => loginChild = null);
         });
@@ -93,15 +98,6 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
     super.initState();
     emailController.text = kUsers[userIndex]['email'];
     passwordController.text = kUsers[userIndex]['password'];
-    loginChild = null;
-    registerChild = null;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    loginChild = null;
-    registerChild = null;
   }
 
   @override
@@ -122,7 +118,11 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: Center(child: Text("Ingrese o regístrese aquí")),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 15),
+                padding: EdgeInsets.only(
+                    left: 2.percentOf(context.width),
+                    right: 2.percentOf(context.width),
+                    top: 2.percentOf(context.height),
+                    bottom: 1.percentOf(context.height)),
                 child: TextFormField(
                     textAlign: TextAlign.center,
                     controller: emailController,

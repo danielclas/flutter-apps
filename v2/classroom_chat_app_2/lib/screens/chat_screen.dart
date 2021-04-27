@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/components/messages_stream.dart';
 import 'package:flash_chat/constants.dart';
@@ -8,6 +9,7 @@ import 'package:flash_chat/services/chat_service.dart';
 import 'package:flash_chat/services/firebase_service.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
+import '../utils/extension_methods.dart';
 
 class ChatScreen extends StatefulWidget {
   static final String id = "ChatScreen";
@@ -28,27 +30,33 @@ class _ChatScreenState extends State<ChatScreen> {
         sender: FirebaseService.loggedInUser.email,
         timestamp: Timestamp.now()));
     textController.clear();
+    showFab = true;
   }
 
   scroll(int duration) {
-    showFab = false;
-    Timer(
-      Duration(milliseconds: duration),
-      () {
-        ChatScreen.controller.animateTo(ChatScreen.controller.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
-      },
-    );
+    if (this.mounted) {
+      showFab = false;
+      Timer(
+        Duration(milliseconds: duration),
+        () {
+          ChatScreen.controller.animateTo(ChatScreen.controller.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+        },
+      );
+    }
   }
 
   @override
   void initState() {
     super.initState();
     ChatScreen.controller.addListener(() {
-      if (ChatScreen.controller.position.atEdge && ChatScreen.controller.position.pixels != 0) {
-        setState(() => showFab = false);
-      } else if (!showFab) setState(() => showFab = true);
+      if (this.mounted) {
+        if (ChatScreen.controller.position.atEdge && ChatScreen.controller.position.pixels != 0) {
+          setState(() => showFab = false);
+        } else if (!showFab) setState(() => showFab = true);
+      }
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) => scroll(500));
   }
 
   @override
@@ -60,7 +68,11 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: null,
-        title: Text('Aula ${collection.substring(collection.indexOf('_') + 1).toUpperCase()}'),
+        title: TypewriterAnimatedTextKit(
+          text: ['Aula ${collection.substring(collection.indexOf('_') + 1).toUpperCase()}'],
+          textStyle: null,
+          speed: Duration(milliseconds: 200),
+        ),
         backgroundColor: HexColor("8fd9a8"),
         shadowColor: Colors.black,
       ),
@@ -113,7 +125,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       onPressed: textController.text.length < 1 ? null : submitMessage,
                       child: Icon(
                         Icons.send,
-                        size: 35,
+                        size: 10.percentOf(context.width),
                         color: textController.text.length < 1 ? Colors.grey : HexColor("28b5b5"),
                       ),
                     ),

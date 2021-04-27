@@ -9,6 +9,7 @@ class ChatService {
 
   ChatService({@required this.collection});
 
-  getMessages() => FirebaseService.firestore.collection(collection).orderBy('timestamp', descending: false).snapshots();
+  getMessages() =>
+      FirebaseService.firestore.collection(collection).orderBy('timestamp', descending: false).snapshots();
   addMessage(Message message) => FirebaseService.firestore.collection(collection).add(message.toJson());
 }

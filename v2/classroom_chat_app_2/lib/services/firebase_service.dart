@@ -14,7 +14,9 @@ class FirebaseService {
 
   //This method should be called on main to initialize Firebase
   static init() async => await Firebase.initializeApp();
-  static signIn(String email, String password) async => await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+
+  static signIn(String email, String password) async =>
+      await auth.signInWithEmailAndPassword(email: email, password: password);
   static register(String email, String password) async =>
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      await auth.createUserWithEmailAndPassword(email: email, password: password);
 }

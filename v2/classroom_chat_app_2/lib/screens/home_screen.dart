@@ -104,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 30),
+                    margin: EdgeInsets.only(
+                        top: 2.percentOf(context.height), bottom: 4.percentOf(context.height)),
                     child: Hero(
                       tag: "graphic",
                       child: Image(
@@ -131,14 +132,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
                                       border: Border.all(
-                                          width: 5,
+                                          width: 2.percentOf(context.width),
                                           color: selected == 0 ? HexColor("d2e69c") : Colors.transparent)),
                                   height: 20.percentOf(context.height),
                                   width: 40.percentOf(context.width),
                                   child: Center(
                                       child: Text(
                                     "4A",
-                                    style: TextStyle(fontSize: 30),
+                                    style: TextStyle(fontSize: 5.percentOf(context.height)),
                                   ))),
                             )),
                       ),
@@ -157,14 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
                                       border: Border.all(
-                                          width: 5,
+                                          width: 2.percentOf(context.width),
                                           color: selected == 1 ? HexColor("d2e69c") : Colors.transparent)),
                                   height: 20.percentOf(context.height),
                                   width: 40.percentOf(context.width),
                                   child: Center(
                                       child: Text(
                                     "4B",
-                                    style: TextStyle(fontSize: 30),
+                                    style: TextStyle(fontSize: 5.percentOf(context.height)),
                                   ))),
                             )),
                       ),

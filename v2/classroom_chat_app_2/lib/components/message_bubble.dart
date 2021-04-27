@@ -4,6 +4,7 @@ import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../utils/extension_methods.dart';
 
 // ignore: must_be_immutable
 class MessageBubble extends StatelessWidget {
@@ -12,15 +13,21 @@ class MessageBubble extends StatelessWidget {
   final Message message;
   bool isFromCurrentUser = true;
 
-  formatSender() => isFromCurrentUser ? '' : '${this.message.sender.toString().substring(0, this.message.sender.indexOf('@'))} |';
+  formatSender() => isFromCurrentUser
+      ? ''
+      : '${this.message.sender.toString().substring(0, this.message.sender.indexOf('@'))} |';
 
   formatTime() => DateFormat('HH:mm').format(message.timestamp.toDate());
 
   //Returns shape of messages bubble based on sender (if current user or not)
   BorderRadiusGeometry getRadiusGeometry() {
-    Radius topRight = Radius.circular(this.isFromCurrentUser ? 0 : 30.0);
-    Radius topLeft = Radius.circular(this.isFromCurrentUser ? 30.0 : 0);
-    return BorderRadius.only(topLeft: topLeft, topRight: topRight, bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0));
+    Radius flatSide = Radius.circular(0);
+    Radius curvedSide = Radius.circular(30);
+    return BorderRadius.only(
+        topLeft: isFromCurrentUser ? curvedSide : flatSide,
+        topRight: isFromCurrentUser ? flatSide : curvedSide,
+        bottomRight: isFromCurrentUser ? flatSide : curvedSide,
+        bottomLeft: isFromCurrentUser ? curvedSide : flatSide);
   }
 
   @override
@@ -28,7 +35,8 @@ class MessageBubble extends StatelessWidget {
     isFromCurrentUser = FirebaseService.loggedInUser.email == message.sender;
 
     return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      padding: EdgeInsets.only(
+          left: 00, right: 0, top: 0.5.percentOf(context.height), bottom: 0.5.percentOf(context.height)),
       child: Column(
         crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
@@ -37,7 +45,7 @@ class MessageBubble extends StatelessWidget {
               borderRadius: getRadiusGeometry(),
               color: isFromCurrentUser ? HexColor("28b5b5") : HexColor("8fd9a8"),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                padding: EdgeInsets.symmetric(vertical: 1.percentOf(context.height), horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: isFromCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [

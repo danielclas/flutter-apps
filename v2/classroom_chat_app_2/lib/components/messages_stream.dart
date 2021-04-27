@@ -4,7 +4,7 @@ import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/utils/date_parser.dart';
 import 'package:flash_chat/utils/hex_color.dart';
 import 'package:flutter/material.dart';
-
+import '../utils/extension_methods.dart';
 import 'date_bubble.dart';
 import 'message_bubble.dart';
 
@@ -34,14 +34,12 @@ class MessagesStream {
       MessagesStream.previousDate = null;
       return ListView(
           controller: ChatScreen.controller,
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
           children: list);
     }
-    return Expanded(
-      child: Center(
-          child: CircularProgressIndicator(
-        backgroundColor: HexColor('d2e69c'),
-      )),
-    );
+    return Center(
+        child: CircularProgressIndicator(
+      backgroundColor: HexColor('d2e69c'),
+    ));
   }
 }

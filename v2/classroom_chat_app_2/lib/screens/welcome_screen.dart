@@ -7,23 +7,13 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import '../utils/extension_methods.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  static final String id = "WelcomeString2";
+  static final String id = "WelcomeScreen";
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    emailController.clear();
-    passwordController.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Expanded(
               child: Container(
                 color: HexColor("4b778d"),
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: 30.percentOf(context.height),
               ),
             )
           ],
@@ -47,14 +37,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.6),
+                padding: EdgeInsets.only(bottom: 60.percentOf(context.width)),
                 child: Container(
                     decoration: new BoxDecoration(
                       color: HexColor("8fd9a8"),
-                      borderRadius: BorderRadius.vertical(
-                          bottom: Radius.elliptical(MediaQuery.of(context).size.width * 0.7, 150)),
+                      borderRadius:
+                          BorderRadius.vertical(bottom: Radius.elliptical(70.percentOf(context.width), 150)),
                     ),
-                    height: MediaQuery.of(context).size.height * 0.5),
+                    height: 50.percentOf(context.height)),
               ),
             )
           ],
