@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
       Timer(
         Duration(milliseconds: duration),
         () {
-          ChatScreen.controller.animateTo(ChatScreen.controller.position.maxScrollExtent,
+          ChatScreen.controller.animateTo(ChatScreen.controller.position.maxScrollExtent + 30,
               duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
         },
       );
@@ -56,7 +56,9 @@ class _ChatScreenState extends State<ChatScreen> {
         } else if (!showFab) setState(() => showFab = true);
       }
     });
-    WidgetsBinding.instance.addPostFrameCallback((_) => scroll(500));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scroll(500);
+    });
   }
 
   @override
