@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/components/tasks_list.dart';
 import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/models/tasks.dart';
 
 import 'add_task_screen.dart';
 
@@ -10,22 +12,13 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [Task(name: 'Buy milk'), Task(name: 'Buy eggs'), Task(name: 'Buy bread')];
-
-  addTaskCallback(String name) => setState(() => this.tasks.add(Task(name: name)));
-  toggleTaskCallback(value, index) => setState(() => tasks[index].toggleDone(value));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showModalBottomSheet(
-            context: context,
-            builder: (context) => Container(
-                    child: AddTaskScreen(
-                  addTaskCallback: addTaskCallback,
-                ))),
+        onPressed: () =>
+            showModalBottomSheet(context: context, builder: (context) => Container(child: AddTaskScreen())),
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add),
       ),
@@ -50,7 +43,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 Text('Todoey',
                     style: TextStyle(color: Colors.white, fontSize: 50, fontWeight: FontWeight.w700)),
                 Text(
-                  '12 tasks',
+                  '${Provider.of<Tasks>(context).taskCount} tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ],
@@ -63,10 +56,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   color: Colors.white,
                   borderRadius:
                       BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-              child: TasksList(
-                tasks: tasks,
-                toggleTaskCallback: toggleTaskCallback,
-              ),
+              child: TasksList(),
             ),
           )
         ],
