@@ -102,8 +102,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.percentOf(context.height),
-      width: 80.percentOf(context.width),
+      width: 70.percentOf(context.width),
       child: Padding(
         padding: EdgeInsets.only(right: 3.percentOf(context.width), left: 3.percentOf(context.width)),
         child: Form(

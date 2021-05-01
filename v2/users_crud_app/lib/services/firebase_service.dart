@@ -19,4 +19,19 @@ class FirebaseService {
       await auth.signInWithEmailAndPassword(email: email, password: password);
   static register(String email, String password) async =>
       await auth.createUserWithEmailAndPassword(email: email, password: password);
+
+  static Future<bool> createUser(String email, String password) async {
+    FirebaseApp app = await Firebase.initializeApp(name: 'Secondary', options: Firebase.app().options);
+    bool success = true;
+    try {
+      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      success = false;
+    } finally {
+      await app.delete();
+    }
+
+    return success;
+  }
 }

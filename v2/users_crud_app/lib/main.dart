@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users_crud_app/screens/home_screen.dart';
 import 'package:users_crud_app/screens/welcome_screen.dart';
 import 'package:users_crud_app/services/firebase_service.dart';
 
@@ -13,10 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: WelcomeScreen.id,
-        routes: {
-          WelcomeScreen.id: (context) => WelcomeScreen(),
-        },
+        initialRoute: HomeScreen.id,
+        routes: {WelcomeScreen.id: (context) => WelcomeScreen(), HomeScreen.id: (context) => HomeScreen()},
         debugShowCheckedModeBanner: false);
   }
 }
