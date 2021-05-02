@@ -123,7 +123,6 @@ class _AddUserState extends State<AddUser> {
                     decoration: InputDecoration(icon: Icon(Icons.mail), labelText: 'Correo')),
                 TextFormField(
                     controller: passwordController,
-                    maxLength: 25,
                     validator: (value) => value.length > 6 ? null : '',
                     obscureText: obscurePassword,
                     decoration: InputDecoration(
@@ -135,7 +134,6 @@ class _AddUserState extends State<AddUser> {
                     )),
                 TextFormField(
                     controller: repeatPasswordController,
-                    maxLength: 25,
                     validator: (value) => value.length < 6 || value != passwordController.text ? '' : null,
                     obscureText: obscureRepeatPassword,
                     decoration: InputDecoration(
@@ -145,11 +143,14 @@ class _AddUserState extends State<AddUser> {
                           icon: Icon(Icons.remove_red_eye)),
                       labelText: 'Repetir Contraseña',
                     )),
-                MaterialButton(
-                  color: HexColor('e84545'),
-                  minWidth: 40.percentOf(context.width),
-                  onPressed: onAddUserPressed,
-                  child: buttonChild == null ? buttonText : buttonChild,
+                Container(
+                  margin: EdgeInsets.only(top: 3.percentOf(context.height)),
+                  child: MaterialButton(
+                    color: HexColor('e84545'),
+                    minWidth: 40.percentOf(context.width),
+                    onPressed: onAddUserPressed,
+                    child: buttonChild == null ? buttonText : buttonChild,
+                  ),
                 ),
               ],
             ),

@@ -28,7 +28,11 @@ class _UsersListState extends State<UsersList> {
         ),
       );
     }
-    return Center(child: Text('No hay usuarios para mostrar'));
+    return Center(
+        child: CircularProgressIndicator(
+      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+      strokeWidth: 2,
+    ));
   }
 
   @override
