@@ -4,7 +4,6 @@ import 'package:users_crud_app/components/add_user.dart';
 import 'package:users_crud_app/components/users_list.dart';
 import 'package:users_crud_app/services/firebase_service.dart';
 import 'package:users_crud_app/utils/hex_color.dart';
-import '../utils/extension_methods.dart';
 
 class HomeScreen extends StatefulWidget {
   static final String id = "HomeScreen";

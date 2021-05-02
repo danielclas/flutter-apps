@@ -1,7 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:users_crud_app/components/login_register_component.dart';
-import '../utils/extension_methods.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static final String id = "WelcomeScreen";

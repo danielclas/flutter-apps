@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:users_crud_app/model/user_model.dart';
 import 'firebase_service.dart';
 

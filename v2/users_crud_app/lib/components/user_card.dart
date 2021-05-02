@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:users_crud_app/model/user_model.dart';
-import '../utils/extension_methods.dart';
 
+// ignore: must_be_immutable
 class UserCard extends StatelessWidget {
   User user;
   UserCard({this.user});

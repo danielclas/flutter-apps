@@ -25,9 +25,9 @@ class FirebaseService {
     FirebaseApp app = await Firebase.initializeApp(name: 'Secondary', options: Firebase.app().options);
     bool success = true;
     try {
-      UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+      await FirebaseAuth.instanceFor(app: app)
           .createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       success = false;
     } finally {
       await app.delete();
