@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:users_crud_app/components/rectangle_button.dart';
+import 'package:users_crud_app/screens/home_screen.dart';
 import 'package:users_crud_app/services/firebase_service.dart';
 import 'package:users_crud_app/utils/constants.dart';
 import 'package:users_crud_app/utils/hex_color.dart';
@@ -75,7 +76,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
       if (user != null) {
         setState(() => loginChild = checkIcon);
         formKey.currentState.reset();
-        Navigator.pushNamed(context, '').then((_) {
+        Navigator.pushNamed(context, HomeScreen.id).then((_) {
           //This is done so that when we pop from the next screen,
           //form is clean
           emailController.clear();
@@ -102,7 +103,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70.percentOf(context.width),
+      width: 80.percentOf(context.width),
       child: Padding(
         padding: EdgeInsets.only(right: 3.percentOf(context.width), left: 3.percentOf(context.width)),
         child: Form(
@@ -116,13 +117,9 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: Center(child: Text("Ingrese o regístrese aquí")),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                    left: 2.percentOf(context.width),
-                    right: 2.percentOf(context.width),
-                    top: 2.percentOf(context.height),
-                    bottom: 1.percentOf(context.height)),
+                padding:
+                    EdgeInsets.only(top: 2.percentOf(context.height), bottom: 1.percentOf(context.height)),
                 child: TextFormField(
-                    textAlign: TextAlign.center,
                     controller: emailController,
                     onChanged: (value) {
                       if (formStatusText != '') setState(() => formStatusText = '');
@@ -132,30 +129,23 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                     //ErrorStyle is given height 0 so that textField doesn't show text error
                     //when invalid, only red outline
                     decoration: InputDecoration(
-                        icon: Icon(Icons.email),
-                        labelText: 'Correo',
-                        labelStyle: TextStyle(color: Colors.black54),
-                        errorStyle: TextStyle(height: 0))),
+                      icon: Icon(Icons.email),
+                      labelText: 'Correo',
+                    )),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                    left: 2.percentOf(context.width),
-                    right: 2.percentOf(context.width),
-                    top: 2.percentOf(context.height),
-                    bottom: 3.percentOf(context.height)),
+                padding:
+                    EdgeInsets.only(top: 2.percentOf(context.height), bottom: 3.percentOf(context.height)),
                 child: TextFormField(
-                    textAlign: TextAlign.center,
                     controller: passwordController,
                     onChanged: (value) => setState(() => formStatusText = ''),
                     validator: (value) => value == null || value.length < 4 ? '' : null,
                     obscureText: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.vpn_key),
-                        labelText: 'Contraseña',
-                        fillColor: Colors.green,
-                        labelStyle: TextStyle(color: Colors.black54),
-                        errorStyle: TextStyle(height: 0))),
+                      icon: Icon(Icons.vpn_key),
+                      labelText: 'Contraseña',
+                    )),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 4.percentOf(context.width)),
@@ -165,42 +155,33 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                   style: TextStyle(color: formStatusTextColor),
                 )),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 1.percentOf(context.width),
-                    bottom: 1.percentOf(context.width),
-                    left: 2.percentOf(context.width),
-                    right: 2.percentOf(context.width)),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 1.percentOf(context.height)),
                 child: RectangleButton(
                   minWidth: 80.percentOf(context.width),
                   text: 'Ingresar',
-                  color: HexColor("8fd9a8"),
+                  color: HexColor("903749"),
                   onPressed: login,
                   child: loginChild,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 2.percentOf(context.width),
-                    right: 2.percentOf(context.width),
-                    top: 1.percentOf(context.width)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RectangleButton(
-                      minWidth: 17.percentOf(context.height),
-                      text: 'Registrarse',
-                      color: HexColor("28b5b5"),
-                      onPressed: register,
-                      child: registerChild,
-                    ),
-                    RectangleButton(
-                      minWidth: 17.percentOf(context.height),
-                      text: 'Usuarios',
-                      color: HexColor("28b5b5"),
-                      onPressed: switchUser,
-                    ),
-                  ],
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 1.percentOf(context.height)),
+                child: RectangleButton(
+                  minWidth: 80.percentOf(context.width),
+                  text: 'Registrarse',
+                  color: HexColor("53354a"),
+                  onPressed: register,
+                  child: registerChild,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 1.percentOf(context.height)),
+                child: RectangleButton(
+                  minWidth: 80.percentOf(context.width),
+                  text: 'Usuarios',
+                  color: HexColor("2b2e4a"),
+                  onPressed: switchUser,
                 ),
               ),
             ],

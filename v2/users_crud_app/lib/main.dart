@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:users_crud_app/screens/home_screen.dart';
 import 'package:users_crud_app/screens/welcome_screen.dart';
 import 'package:users_crud_app/services/firebase_service.dart';
+import 'package:users_crud_app/utils/hex_color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: HomeScreen.id,
+        theme: ThemeData(
+            // Define the default brightness and colors.
+            brightness: Brightness.dark,
+            primaryColor: HexColor('903749'),
+            accentColor: HexColor('e84545'),
+            inputDecorationTheme: InputDecorationTheme(
+                suffixStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
+                focusColor: HexColor('e84545'),
+                errorStyle: TextStyle(color: Colors.white, height: 0))),
+        initialRoute: WelcomeScreen.id,
         routes: {WelcomeScreen.id: (context) => WelcomeScreen(), HomeScreen.id: (context) => HomeScreen()},
         debugShowCheckedModeBanner: false);
   }

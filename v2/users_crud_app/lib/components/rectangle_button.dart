@@ -15,7 +15,6 @@ class RectangleButton extends StatelessWidget {
     return Material(
       elevation: 5.0,
       color: this.color,
-      borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
         onPressed: this.onPressed,
         minWidth: minWidth,

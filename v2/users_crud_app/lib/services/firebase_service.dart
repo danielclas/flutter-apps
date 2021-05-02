@@ -9,6 +9,7 @@ class FirebaseService {
   static FirebaseFirestore get firestore => FirebaseFirestore.instance;
   static get instance => _instance;
   static User get loggedInUser => auth.currentUser;
+  static bool get userIsAdmin => loggedInUser.email == 'admin@admin.com';
 
   FirebaseService._constructor();
 
