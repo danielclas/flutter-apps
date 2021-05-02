@@ -21,6 +21,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: HexColor('53354a'),
+          title: Text('Administración de usuarios'),
+        ),
         body: AnimatedBackground(
           behaviour: RacingLinesBehaviour(
             numLines: 10,

@@ -86,7 +86,7 @@ class _AddUserState extends State<AddUser> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
