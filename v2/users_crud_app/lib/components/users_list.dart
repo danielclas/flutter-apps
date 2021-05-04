@@ -10,29 +10,27 @@ class UsersList extends StatefulWidget {
 }
 
 class _UsersListState extends State<UsersList> {
+  final spinner = CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+    strokeWidth: 2,
+  );
+
   Widget buildList(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    Widget child = spinner;
     if (snapshot.hasData) {
-      final list = <Widget>[];
-      for (var u in snapshot.data.docs) {
-        list.add(UserCard(
-          user: User.fromJson(u.data()),
-        ));
-      }
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: ListView(
-            reverse: true,
-            children: list,
-          ),
+      child = Padding(
+        padding: const EdgeInsets.all(15),
+        child: ListView(
+          reverse: true,
+          children: snapshot.data.docs
+              .map((e) => UserCard(
+                    user: User.fromJson(e.data()),
+                  ))
+              .toList(),
         ),
       );
     }
-    return Center(
-        child: CircularProgressIndicator(
-      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-      strokeWidth: 2,
-    ));
+    return Center(child: child);
   }
 
   @override

@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "498643254379",
+    "project_id": "pps-apps-b0fb3",
+    "storage_bucket": "pps-apps-b0fb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:8749212901da6195c3852e",
+        "android_client_info": {
+          "package_name": "com.danielclas.classroom_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:53a0a36aea73a657c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.theft_alarm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:962174ec2b668903c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.users_crud_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:d3a6300cb1c17ad2c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.visual_survey_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
