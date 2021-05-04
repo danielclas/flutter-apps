@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visual_survey_app/screens/home_screen.dart';
+import 'package:visual_survey_app/screens/section_screen.dart';
 import 'package:visual_survey_app/screens/welcome_screen.dart';
 import 'package:visual_survey_app/services/firebase_service.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           HomeScreen.id: (context) => HomeScreen(),
+          SectionScreen.id: (context) => SectionScreen(),
         },
         debugShowCheckedModeBanner: false);
   }
