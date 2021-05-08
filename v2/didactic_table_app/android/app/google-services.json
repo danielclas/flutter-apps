@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "545182482367",
-    "firebase_url": "https://pps-apps-aa8cf.firebaseio.com",
-    "project_id": "pps-apps-aa8cf",
-    "storage_bucket": "pps-apps-aa8cf.appspot.com"
+    "project_number": "498643254379",
+    "project_id": "pps-apps-b0fb3",
+    "storage_bucket": "pps-apps-b0fb3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:545182482367:android:c33f7c41b3ebe435a26b0a",
+        "mobilesdk_app_id": "1:498643254379:android:8749212901da6195c3852e",
         "android_client_info": {
-          "package_name": "com.example.relevamiento_visual_app"
+          "package_name": "com.danielclas.classroom_chat_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -37,27 +36,143 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:545182482367:android:53d62abe2bec5905a26b0a",
+        "mobilesdk_app_id": "1:498643254379:android:6c51fe61a6e0e086c3852e",
         "android_client_info": {
-          "package_name": "com.example.tabla_didactica_app"
+          "package_name": "com.example.didactic_table_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCPO12Yo7SImYD3VZUv7KRQr6xvsPLh9lo"
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "545182482367-lt27b4i9feshf4vqksf2n5i512dlfsto.apps.googleusercontent.com",
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:042c0451971c4d5ec3852e",
+        "android_client_info": {
+          "package_name": "danielclas.credit_vault_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:53a0a36aea73a657c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.theft_alarm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:962174ec2b668903c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.users_crud_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498643254379:android:d3a6300cb1c17ad2c3852e",
+        "android_client_info": {
+          "package_name": "danielclas.visual_survey_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8facv3lT89nQmxGb0ufORjwa7BSUsXR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498643254379-pu0sibfo4hresk1veo0hhss2b1o465u1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

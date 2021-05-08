@@ -1,4 +1,4 @@
-# tabla_didactica_app
+# didactic_table_app
 
 A new Flutter project.
 
