@@ -49,38 +49,68 @@ const kUsers = [
 final kUserIcons = [
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn2",
   ),
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn3",
   ),
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn4",
   ),
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn5",
   ),
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn6",
   ),
   FloatingActionButton(
     onPressed: () {},
-    backgroundColor: Color(0xff8BC34A),
+    backgroundColor: HexColor('95e1d3'),
     child: Icon(Icons.person),
     heroTag: "btn7",
   ),
+];
+
+const kAnimals = [
+  ['Dog', 'Cat', 'Lion', 'Dolphin', 'Tiger'],
+  ['Perro', 'Gato', 'León', 'Delfín', 'Tigre'],
+  ['Cachorro', 'Gato', 'Leão', 'Golfinho', 'Tigre']
+];
+
+const kLanguages = ['English', 'Spanish', 'Portuguese'];
+const kTtsLanguages = ['en-GB', 'es-ES', 'pt-PT'];
+
+const kSectionImages = [
+  ['one.png', 'two.png', 'three.png', 'four.png', 'five.png'],
+  ['red.png', 'blue.png', 'yellow.png', 'purple.png', 'green.png'],
+  ['dog.png', 'cat.png', 'lion.png', 'delfin.png', 'tigre.png']
+];
+const kIcons = ['num.png', 'col.png', 'ani.png'];
+const kFlags = ['eng.png', 'esp.png', 'por.png'];
+const kSections = [kNumbers, kColors, kAnimals];
+
+const kNumbers = [
+  ['One', 'Two', 'Three', 'Four', 'Five'],
+  ['Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco'],
+  ['Um', 'Dois', 'Três', 'Quatro', 'Cinco']
+];
+
+const kColors = [
+  ['Red', 'Blue', 'Yellow', 'Purple', 'Green'],
+  ['Rojo', 'Azul', 'Amarillo', 'Púrpura', 'Verde'],
+  ['Vermelho', 'Azul', 'Amarelo', 'Roxo', 'Verde'],
 ];

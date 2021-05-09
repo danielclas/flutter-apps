@@ -6,6 +6,7 @@ import 'package:credit_vault_app/utils/hex_color.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import '../services/firebase_service.dart';
 import '../utils/extension_methods.dart';
 
@@ -76,7 +77,13 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
       if (user != null) {
         setState(() => loginChild = checkIcon);
         formKey.currentState.reset();
-        Navigator.pushNamed(context, HomeScreen.id).then((_) {
+        Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeftWithFade,
+              duration: Duration(milliseconds: 500),
+              child: HomeScreen(),
+            )).then((_) {
           //This is done so that when we pop from the next screen,
           //form is clean
           emailController.clear();
@@ -173,8 +180,8 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                               //ErrorStyle is given height 0 so that textField doesn't show text error
                               //when invalid, only red outline
                               decoration: kTextFieldDecoration.copyWith(
-                                  labelText: 'Correo',
-                                  labelStyle: TextStyle(color: Colors.black54),
+                                  hintText: 'Correo',
+                                  hintStyle: TextStyle(color: Colors.black54),
                                   errorStyle: TextStyle(height: 0))),
                         ),
                         Padding(
@@ -192,8 +199,8 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                                 obscureText: true,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: kTextFieldDecoration.copyWith(
-                                    labelText: 'Contraseña',
-                                    labelStyle: TextStyle(color: Colors.black54),
+                                    hintText: 'Contraseña',
+                                    hintStyle: TextStyle(color: Colors.black54),
                                     errorStyle: TextStyle(height: 0))),
                           ),
                         ),

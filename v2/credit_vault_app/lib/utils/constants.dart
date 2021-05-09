@@ -21,6 +21,8 @@ final kMessageContainerDecoration = BoxDecoration(
 );
 
 final InputDecoration kTextFieldDecoration = InputDecoration(
+  fillColor: Colors.white,
+  filled: true,
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),

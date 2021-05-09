@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:didactic_table_app/components/custom_slider.dart';
 import 'package:didactic_table_app/components/rounded_button.dart';
-import 'package:didactic_table_app/components/users_slider.dart';
 import 'package:didactic_table_app/screens/home_screen.dart';
 import 'package:didactic_table_app/utils/constants.dart';
 import 'package:didactic_table_app/utils/hex_color.dart';
@@ -111,145 +110,93 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Carga de créditos',
-        ),
-        backgroundColor: HexColor('a58faa'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: HexColor('a58faa'),
-        child: Icon(
-          Icons.supervised_user_circle,
-        ),
-        onPressed: switchUser,
-      ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 10.percentOf(context.height), bottom: 2.percentOf(context.height)),
-              child: Text(
-                '¡Bienvenid@!',
-                style: TextStyle(
-                  fontSize: 12.percentOf(context.width),
-                ),
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10.percentOf(context.height)),
+          child: Text(
+            '¡Bienvenid@!',
+            style: TextStyle(
+              fontSize: 12.percentOf(context.width),
             ),
-            Center(
-              child: Container(
-                height: 50.percentOf(context.height),
-                width: 80.percentOf(context.width),
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(right: 3.percentOf(context.width), left: 3.percentOf(context.width)),
-                  child: Form(
-                    key: formKey,
-                    onChanged: () => formStatusText = '',
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          decoration: BoxDecoration(
-                            color: Colors.teal[300],
-                            shape: BoxShape.circle,
-                          ),
-                          child: UsersSlider(handler: switchUser),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 4.percentOf(context.width), bottom: 2.percentOf(context.width)),
-                          child: Center(child: Text("Ingrese o regístrese aquí")),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 2.percentOf(context.width),
-                              right: 2.percentOf(context.width),
-                              top: 3.percentOf(context.height),
-                              bottom: 1.percentOf(context.height)),
-                          child: TextFormField(
-                              textAlign: TextAlign.center,
-                              controller: emailController,
-                              onChanged: (value) {
-                                if (formStatusText != '') setState(() => formStatusText = '');
-                              },
-                              validator: (value) => EmailValidator.validate(value) ? null : '',
-                              keyboardType: TextInputType.emailAddress,
-                              //ErrorStyle is given height 0 so that textField doesn't show text error
-                              //when invalid, only red outline
-                              decoration: kTextFieldDecoration.copyWith(
-                                  hintText: 'Correo',
-                                  hintStyle: TextStyle(color: Colors.black54),
-                                  errorStyle: TextStyle(height: 0))),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 2.percentOf(context.width),
-                              right: 2.percentOf(context.width),
-                              top: 3.percentOf(context.height),
-                              bottom: 1.percentOf(context.height)),
-                          child: SizedBox(
-                            child: TextFormField(
-                                textAlign: TextAlign.center,
-                                controller: passwordController,
-                                onChanged: (value) => setState(() => formStatusText = ''),
-                                validator: (value) => value == null || value.length < 4 ? '' : null,
-                                obscureText: true,
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: kTextFieldDecoration.copyWith(
-                                    hintText: 'Contraseña',
-                                    hintStyle: TextStyle(color: Colors.black54),
-                                    errorStyle: TextStyle(height: 0))),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 4.percentOf(context.width)),
-                          child: Center(
-                              child: Text(
-                            formStatusText,
-                            style: TextStyle(color: formStatusTextColor),
-                          )),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 1.percentOf(context.width),
-                              bottom: 3.percentOf(context.width),
-                              left: 2.percentOf(context.width),
-                              right: 2.percentOf(context.width)),
-                          child: RoundedButton(
-                            minWidth: 80.percentOf(context.width),
-                            text: 'Ingresar',
-                            color: HexColor("907fa4"),
-                            onPressed: login,
-                            child: loginChild,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 2.percentOf(context.width),
-                              right: 2.percentOf(context.width),
-                              top: 3.percentOf(context.width)),
-                          child: RoundedButton(
-                            minWidth: 80.percentOf(context.height),
-                            text: 'Registrarse',
-                            color: HexColor("a6d6d6"),
-                            onPressed: register,
-                          ),
-                        ),
-                      ],
-                    ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.percentOf(context.width)),
+          height: 60.percentOf(context.height),
+          width: 100.percentOf(context.width),
+          child: Form(
+            key: formKey,
+            onChanged: () => formStatusText = '',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(2.percentOf(context.height)),
+                  child: Center(child: Text("Ingrese o regístrese aquí")),
+                ),
+                TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: emailController,
+                    onChanged: (value) {
+                      if (formStatusText != '') setState(() => formStatusText = '');
+                    },
+                    validator: (value) => EmailValidator.validate(value) ? null : '',
+                    keyboardType: TextInputType.emailAddress,
+                    //ErrorStyle is given height 0 so that textField doesn't show text error
+                    //when invalid, only red outline
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Correo',
+                        hintStyle: TextStyle(color: Colors.black54),
+                        errorStyle: TextStyle(height: 0))),
+                SizedBox(
+                  child: TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: passwordController,
+                      onChanged: (value) => setState(() => formStatusText = ''),
+                      validator: (value) => value == null || value.length < 4 ? '' : null,
+                      obscureText: true,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: kTextFieldDecoration.copyWith(
+                          hintText: 'Contraseña',
+                          hintStyle: TextStyle(color: Colors.black54),
+                          errorStyle: TextStyle(height: 0))),
+                ),
+                Container(
+                    margin: EdgeInsets.symmetric(vertical: 2.percentOf(context.height)),
+                    child: Text(
+                      formStatusText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: formStatusTextColor),
+                    )),
+                RoundedButton(
+                  minWidth: 80.percentOf(context.width),
+                  text: 'Ingresar',
+                  color: HexColor("f38181"),
+                  onPressed: login,
+                  child: loginChild,
+                ),
+                RoundedButton(
+                  minWidth: 80.percentOf(context.height),
+                  text: 'Registrarse',
+                  color: HexColor("95e1d3"),
+                  onPressed: register,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 5.percentOf(context.height)),
+                  decoration: BoxDecoration(
+                    color: Colors.teal[300],
+                    shape: BoxShape.circle,
                   ),
+                  child: CustomSlider(children: kUserIcons, handler: (index, b) => switchUser()),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
