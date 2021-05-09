@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Hola de nuevo, Admin!',
+                  'Hola de nuevo, ${getUserName()}!',
                   style: TextStyle(fontSize: 30),
                 ),
               ),
