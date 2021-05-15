@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RoundedButton extends StatelessWidget {
+class RectangleButton extends StatelessWidget {
   final Color color;
   final String text;
   final Function onPressed;
   final double minWidth;
   final Widget child;
 
-  RoundedButton({this.text, this.color, @required this.onPressed, this.minWidth, this.child});
+  RectangleButton({this.text, this.color, @required this.onPressed, this.minWidth, this.child});
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 5.0,
       color: this.color,
-      borderRadius: BorderRadius.circular(30.0),
       child: MaterialButton(
         onPressed: this.onPressed,
         minWidth: minWidth,

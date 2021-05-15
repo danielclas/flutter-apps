@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:visual_survey_app/components/rounded_button.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:visual_survey_app/components/rectangle_button.dart';
 import 'package:visual_survey_app/screens/home_screen.dart';
 import 'package:visual_survey_app/services/firebase_service.dart';
 import 'package:visual_survey_app/utils/constants.dart';
@@ -28,6 +29,16 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   );
   final Widget checkIcon = Icon(Icons.check, color: Colors.white);
 
+  final InputDecoration kTextFieldDecoration = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black.withOpacity(0.3), width: 1.0),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: HexColor('14ffec'), width: 2.0),
+    ),
+  );
+
   switchUser() {
     //When the 'users' button is pressed, we select a different
     //user from preset users, and refresh the view
@@ -49,7 +60,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
     }
     setState(() => registerChild = spinner);
     try {
-      UserCredential user = await FirebaseService.register(emailController.text, passwordController.text);
+      final user = await FirebaseService.register(emailController.text, passwordController.text);
       if (user != null) {
         setState(() => registerChild = checkIcon);
         formStatusTextColor = Colors.green;
@@ -72,7 +83,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
     setState(() => loginChild = spinner);
 
     try {
-      UserCredential user = await FirebaseService.signIn(emailController.text, passwordController.text);
+      final user = await FirebaseService.signIn(emailController.text, passwordController.text);
       if (user != null) {
         setState(() => loginChild = checkIcon);
         formKey.currentState.reset();
@@ -103,7 +114,7 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.percentOf(context.height),
+      height: 70.percentOf(context.height),
       width: 80.percentOf(context.width),
       child: Padding(
         padding: EdgeInsets.only(right: 3.percentOf(context.width), left: 3.percentOf(context.width)),
@@ -113,6 +124,9 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Container(
+                  child: Image(
+                      height: 15.percentOf(context.height), image: Svg('images/welcome-screen-graphic.svg'))),
               Padding(
                 padding: EdgeInsets.only(top: 4.percentOf(context.width), bottom: 2.percentOf(context.width)),
                 child: Center(child: Text("Ingrese o regístrese aquí")),
@@ -172,10 +186,10 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                     bottom: 1.percentOf(context.width),
                     left: 2.percentOf(context.width),
                     right: 2.percentOf(context.width)),
-                child: RoundedButton(
+                child: RectangleButton(
                   minWidth: 80.percentOf(context.width),
                   text: 'Ingresar',
-                  color: HexColor("8fd9a8"),
+                  color: HexColor("14ffec"),
                   onPressed: login,
                   child: loginChild,
                 ),
@@ -188,17 +202,17 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RoundedButton(
-                      minWidth: 17.percentOf(context.height),
+                    RectangleButton(
+                      minWidth: 18.percentOf(context.height),
                       text: 'Registrarse',
-                      color: HexColor("28b5b5"),
+                      color: HexColor("0d7377"),
                       onPressed: register,
                       child: registerChild,
                     ),
-                    RoundedButton(
-                      minWidth: 17.percentOf(context.height),
+                    RectangleButton(
+                      minWidth: 18.percentOf(context.height),
                       text: 'Usuarios',
-                      color: HexColor("28b5b5"),
+                      color: HexColor("323232"),
                       onPressed: switchUser,
                     ),
                   ],

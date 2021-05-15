@@ -20,7 +20,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  final Color disabledColor = HexColor('e45826');
+  final Color enabledColor = Colors.black;
   Color color = HexColor('e45826');
+  Size lastSize;
+
   String label = 'Activar la alarma';
   IconData icon = Icons.alarm_add;
 
@@ -32,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     Tts.initializeTts();
+    lastSize = WidgetsBinding.instance.window.physicalSize;
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -43,6 +48,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
+    setState(() {
+      lastSize = WidgetsBinding.instance.window.physicalSize;
+      print(lastSize);
+    });
+    return;
+    print('metrics did change!');
     if (this.color == Colors.grey) {
       setState(() {
         isPortraitMode = window.physicalSize.width > window.physicalSize.height;
@@ -96,10 +107,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 onPressed: () {
                   setState(() {
                     if ("123456" == passwordController.text) {
-                      this.color = this.color == HexColor('f0a500') ? HexColor('e45826') : HexColor('f0a500');
-                      this.label =
-                          this.color == HexColor('f0a500') ? 'Desactivar la alarma' : 'Activar la alarma';
-                      this.icon = this.color == HexColor('f0a500') ? Icons.alarm_off : Icons.alarm_add;
+                      this.color = this.color == enabledColor ? disabledColor : enabledColor;
+                      this.label = this.color == enabledColor ? 'Desactivar la alarma' : 'Activar la alarma';
+                      this.icon = this.color == enabledColor ? Icons.alarm_off : Icons.alarm_add;
                       Navigator.of(context).pop();
                     } else {
                       Alert(message: 'La contraseña ingresada no es correcta').show();
