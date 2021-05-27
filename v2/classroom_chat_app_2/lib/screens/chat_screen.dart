@@ -64,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final collection = ModalRoute.of(context).settings.arguments as String;
+    final room = collection.substring(collection.indexOf('_') + 1).toUpperCase();
     chatService = ChatService(collection: collection);
 
     return Scaffold(
@@ -71,11 +72,11 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true,
         leading: null,
         title: TypewriterAnimatedTextKit(
-          text: ['Aula ${collection.substring(collection.indexOf('_') + 1).toUpperCase()}'],
+          text: ['Aula $room'],
           textStyle: null,
           speed: Duration(milliseconds: 200),
         ),
-        backgroundColor: HexColor("8fd9a8"),
+        backgroundColor: room == 'A' ? HexColor("28b5b5") : HexColor('d2e69c'),
         shadowColor: Colors.black,
       ),
       floatingActionButton: Stack(

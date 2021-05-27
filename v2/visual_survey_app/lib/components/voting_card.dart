@@ -27,7 +27,7 @@ class _VotingCardState extends State<VotingCard> {
     super.initState();
     user = widget.picture.path.substring(0, widget.picture.path.indexOf('-'));
 
-    date = formatDate(widget.picture.date.toDate(), [yyyy, '-', mm, '-', dd]);
+    date = formatDate(widget.picture.date, [yyyy, '-', mm, '-', dd]);
 
     if (widget.picture.usersVoted != null &&
         widget.picture.usersVoted

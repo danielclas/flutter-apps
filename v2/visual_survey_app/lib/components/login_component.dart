@@ -203,14 +203,14 @@ class _LoginRegisterComponentState extends State<LoginRegisterComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     RectangleButton(
-                      minWidth: 18.percentOf(context.height),
+                      minWidth: 30.percentOf(context.width),
                       text: 'Registrarse',
                       color: HexColor("0d7377"),
                       onPressed: register,
                       child: registerChild,
                     ),
                     RectangleButton(
-                      minWidth: 18.percentOf(context.height),
+                      minWidth: 30.percentOf(context.width),
                       text: 'Usuarios',
                       color: HexColor("323232"),
                       onPressed: switchUser,

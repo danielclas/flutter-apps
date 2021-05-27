@@ -1,3 +1,4 @@
+import 'package:didactic_table_app/components/image_tiles.dart';
 import 'package:didactic_table_app/components/slidable_item.dart';
 import 'package:didactic_table_app/services/firebase_service.dart';
 import 'package:didactic_table_app/services/tts_service.dart';
@@ -19,16 +20,22 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedSection = 0;
   int selectedItem = 0;
 
-  void switchLanguage(index, b) {
-    selectedLanguage = index;
-    Tts.setTtsLanguage(kTtsLanguages[selectedLanguage]);
+  void switchSection() {
+    setState(() {
+      selectedSection = selectedSection + 1 < 3 ? selectedSection + 1 : 0;
+    });
   }
 
-  void switchSection(index, b) => setState(() => selectedSection = index);
+  void switchLanguage() {
+    setState(() {
+      selectedLanguage = selectedLanguage + 1 < 3 ? selectedLanguage + 1 : 0;
+      Tts.setTtsLanguage(kTtsLanguages[selectedLanguage]);
+    });
+  }
 
   void switchItem(index, b) => setState(() => selectedItem = index);
 
-  void speak() => Tts.speak(kSections[selectedSection][selectedLanguage][selectedItem]);
+  void speak(section, language, item) => Tts.speak(kSections[section][language][item]);
 
   String getUserName() =>
       FirebaseService.loggedInUser.email.substring(0, FirebaseService.loggedInUser.email.indexOf('@'));
@@ -52,55 +59,51 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Center(
         child: Container(
-          decoration: BoxDecoration(color: HexColor('fce38a')),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Hola de nuevo, ${getUserName()}!',
-                  style: TextStyle(fontSize: 30),
-                ),
-              ),
-              CustomSlider(
-                children: buildImageList(kFlags),
-                handler: switchLanguage,
-                height: 12.percentOf(context.height),
-              ),
-              CustomSlider(
-                children: buildImageList(kSectionImages[selectedSection]),
-                handler: switchItem,
-                height: 27.percentOf(context.height),
-              ),
-              CustomSlider(
-                children: buildImageList(kIcons),
-                handler: switchSection,
-                height: 12.percentOf(context.height),
-              ),
-              GestureDetector(
-                onTap: speak,
-                child: Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    child: Container(
-                        width: 40.percentOf(context.width),
-                        decoration: BoxDecoration(
-                            color: HexColor('f38181'),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            border: Border.all(width: 2.percentOf(context.width), color: Colors.transparent)),
-                        child: Center(
-                            child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'Escuchar',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        )))),
-              ),
-            ],
-          ),
-        ),
+            decoration: BoxDecoration(color: HexColor('fce38a')),
+            child: context.height < context.width
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ImageTiles(section: selectedSection, language: selectedLanguage, onTap: this.speak),
+                      context.height < context.width
+                          ? Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              GestureDetector(
+                                  onTap: switchSection,
+                                  child: SlidableSquare(
+                                      child: Image(image: AssetImage('images/${kIcons[selectedSection]}')))),
+                              GestureDetector(
+                                  onTap: switchLanguage,
+                                  child: SlidableSquare(
+                                      child: Image(image: AssetImage('images/${kFlags[selectedLanguage]}'))))
+                            ])
+                          : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              GestureDetector(
+                                  onTap: switchSection,
+                                  child: SlidableSquare(
+                                      child: Image(image: AssetImage('images/${kIcons[selectedSection]}')))),
+                              GestureDetector(
+                                  onTap: switchLanguage,
+                                  child: SlidableSquare(
+                                      child: Image(image: AssetImage('images/${kFlags[selectedLanguage]}'))))
+                            ]),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ImageTiles(section: selectedSection, language: selectedLanguage, onTap: this.speak),
+                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        GestureDetector(
+                            onTap: switchSection,
+                            child: SlidableSquare(
+                                child: Image(image: AssetImage('images/${kIcons[selectedSection]}')))),
+                        GestureDetector(
+                            onTap: switchLanguage,
+                            child: SlidableSquare(
+                                child: Image(image: AssetImage('images/${kFlags[selectedLanguage]}'))))
+                      ]),
+                    ],
+                  )),
       ),
     );
   }

@@ -49,28 +49,30 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     setState(() {
-      lastSize = WidgetsBinding.instance.window.physicalSize;
-      print(lastSize);
+      final currentSize = WidgetsBinding.instance.window.physicalSize;
+      if (currentSize != lastSize) {
+        setState(() {
+          lastSize = currentSize;
+          isPortraitMode = lastSize.width > lastSize.height;
+          if (color == enabledColor) {
+            if (isPortraitMode) {
+              Torch.turnOn();
+              Timer(Duration(seconds: 5), () => Torch.turnOff());
+              Tts.speak(kWarnings[0]);
+            } else {
+              Tts.speak(kWarnings[1]);
+              Vibration.vibrate(duration: 5000);
+            }
+          }
+        });
+      }
     });
     return;
-    print('metrics did change!');
-    if (this.color == Colors.grey) {
-      setState(() {
-        isPortraitMode = window.physicalSize.width > window.physicalSize.height;
-        if (isPortraitMode) {
-          Torch.turnOn();
-          Timer(Duration(seconds: 5), () => Torch.turnOff());
-          Tts.speak(kWarnings[0]);
-        } else {
-          Tts.speak(kWarnings[1]);
-          Vibration.vibrate(duration: 5000);
-        }
-      });
-    }
   }
 
   void onTap() {
     setState(() {
+      passwordController.clear();
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -87,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               obscureText: true,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: HexColor('e45826'), width: 0.0),
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: HexColor('e45826'), width: 0.0),
                 ),
                 labelStyle: TextStyle(color: Colors.black),
@@ -133,6 +138,98 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     });
   }
 
+  children() {
+    final children1 = [
+      Text(
+        "Bienvenido, ${FirebaseService.loggedInUser.email.substring(0, FirebaseService.loggedInUser.email.indexOf('@'))}",
+        style: TextStyle(fontSize: isPortraitMode ? 15 : 30, color: Colors.white),
+      )
+    ];
+
+    final children2 = [
+      GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(35.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: Colors.white70, width: 2),
+              borderRadius: BorderRadius.all(
+                Radius.circular(70),
+              ),
+            ),
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Flex(
+                  direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icon,
+                      color: color,
+                      size: isPortraitMode ? 50 : 200,
+                    ),
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      )
+    ];
+
+    final children3 = [
+      Text(
+        "Presione en el icono \n para ${label[0].toLowerCase()}${label.substring(1)}",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: isPortraitMode ? 15 : 20,
+          color: Colors.white,
+        ),
+      )
+    ];
+
+    return [
+      isPortraitMode
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children1)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children1),
+      isPortraitMode
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children2)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children2),
+      isPortraitMode
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children3)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: children3),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -146,85 +243,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         body: Container(
           color: HexColor('f0a500'),
           child: Center(
-            child: Flex(
-              direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flex(
-                  direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Bienvenido, ${FirebaseService.loggedInUser.email.substring(0, FirebaseService.loggedInUser.email.indexOf('@'))}",
-                      style: TextStyle(fontSize: isPortraitMode ? 15 : 30, color: Colors.white),
-                    )
-                  ],
-                ),
-                Flex(
-                  direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: onTap,
-                      child: Padding(
-                        padding: const EdgeInsets.all(35.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            border: Border.all(color: Colors.white70, width: 2),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(70),
-                            ),
-                          ),
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Flex(
-                                direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    icon,
-                                    color: color,
-                                    size: isPortraitMode ? 50 : 200,
-                                  ),
-                                  Text(
-                                    label,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Flex(
-                  direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Presione en el icono \n para ${label[0].toLowerCase()}${label.substring(1)}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: isPortraitMode ? 15 : 20,
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+            child: isPortraitMode
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children(),
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children(),
+                  ),
           ),
         ),
       ),

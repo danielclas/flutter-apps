@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Picture {
   int dislikes;
   int likes;
   String path;
   String url;
-  Timestamp date;
+  DateTime date;
   List<dynamic> usersVoted;
 
   Picture(this.likes, this.dislikes, this.path, this.usersVoted);

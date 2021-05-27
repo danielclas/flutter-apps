@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseService {
@@ -7,14 +7,14 @@ class FirebaseService {
   static String currentUser = 'admin@admin.com';
 
   static get auth => FirebaseAuth.instance;
-  static Firestore get firestore => Firestore.instance;
+  static get firestore => FirebaseFirestore.instance;
   static get instance => _instance;
   static String get loggedInUser => currentUser;
 
   FirebaseService._constructor();
 
   //This method should be called on main to initialize Firebase
-  static init() async => FirebaseApp.instance;
+  static init() async => FirebaseApp;
 
   static signIn(String email, String password) async {
     currentUser = email;

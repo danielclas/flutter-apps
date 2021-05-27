@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="danielclas.theft_alarm_app">
    <application
-        android:label="theft_alarm_app"
+        android:label="Alarma de robo"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

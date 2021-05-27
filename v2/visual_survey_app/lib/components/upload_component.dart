@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:visual_survey_app/components/rectangle_button.dart';
@@ -21,7 +20,7 @@ class _UploadComponentState extends State<UploadComponent> {
   File imageFile;
   bool showSpinner = false;
   ImagePicker picker = ImagePicker();
-  StorageUploadTask task;
+  UploadTask task;
   Image image;
 
   Future<void> pickImage(ImageSource source) async {
@@ -76,12 +75,7 @@ class _UploadComponentState extends State<UploadComponent> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: showSpinner
-                          ? [
-                              SpinKitFadingCube(
-                                color: Colors.yellow[400],
-                                size: 100,
-                              ),
-                            ]
+                          ? [Text('...')]
                           : [
                               Icon(Icons.camera),
                               Text("Presiona para tomar una foto"),
@@ -99,20 +93,15 @@ class _UploadComponentState extends State<UploadComponent> {
           Container(
             child: task == null
                 ? null
-                : StreamBuilder<StorageTaskEvent>(
-                    stream: task.events,
+                : StreamBuilder<TaskSnapshot>(
+                    stream: task.snapshotEvents,
                     builder: (context, snapshot) {
-                      var event = snapshot?.data?.snapshot;
-
-                      if (task.isComplete) notifyTaskComplete();
+                      task.whenComplete(() => notifyTaskComplete());
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (task.isInProgress) FadingText('Cargando...'),
-                          if (task.isSuccessful) Text("Completada!"),
-                        ],
+                        children: [FadingText('Cargando...')],
                       );
                     },
                   ),

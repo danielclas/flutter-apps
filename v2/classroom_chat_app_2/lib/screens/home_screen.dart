@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Material(
                             elevation: 20,
                             borderRadius: BorderRadius.all(Radius.circular(30)),
-                            color: Colors.white,
+                            color: HexColor('28b5b5'),
                             child: GestureDetector(
                               onTap: () => onClassroomBoxTap(0),
                               child: Container(
@@ -133,13 +133,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
                                       border: Border.all(
                                           width: 2.percentOf(context.width),
-                                          color: selected == 0 ? HexColor("d2e69c") : Colors.transparent)),
+                                          color: selected == 0 ? Colors.white : Colors.transparent)),
                                   height: 20.percentOf(context.height),
                                   width: 40.percentOf(context.width),
                                   child: Center(
                                       child: Text(
                                     "4A",
-                                    style: TextStyle(fontSize: 5.percentOf(context.height)),
+                                    style:
+                                        TextStyle(color: Colors.white, fontSize: 5.percentOf(context.height)),
                                   ))),
                             )),
                       ),
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Material(
                             elevation: 20,
                             borderRadius: BorderRadius.all(Radius.circular(30)),
-                            color: Colors.white,
+                            color: HexColor('d2e69c'),
                             child: GestureDetector(
                               onTap: () => onClassroomBoxTap(1),
                               child: Container(
@@ -159,13 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.all(Radius.circular(30)),
                                       border: Border.all(
                                           width: 2.percentOf(context.width),
-                                          color: selected == 1 ? HexColor("d2e69c") : Colors.transparent)),
+                                          color: selected == 1 ? Colors.white : Colors.transparent)),
                                   height: 20.percentOf(context.height),
                                   width: 40.percentOf(context.width),
                                   child: Center(
                                       child: Text(
                                     "4B",
-                                    style: TextStyle(fontSize: 5.percentOf(context.height)),
+                                    style:
+                                        TextStyle(color: Colors.white, fontSize: 5.percentOf(context.height)),
                                   ))),
                             )),
                       ),

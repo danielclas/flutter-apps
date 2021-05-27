@@ -11,20 +11,21 @@ class PictureService {
   static String basePath = 'gs://pps-apps-b0fb3.appspot.com/images/';
 
   static void initService() async {
-    if (storage == null) storage = FirebaseStorage(storageBucket: storageBucket);
+    if (storage == null)
+      storage = FirebaseFirestore.instanceFor(app: FirebaseService.instance) as FirebaseStorage;
   }
 
-  static StorageUploadTask uploadPicture(File file) {
+  static uploadPicture(File file) {
     initService();
 
-    String timestamp = Timestamp.now().seconds.toString();
+    String timestamp = DateTime.now().second.toString();
     String user = FirebaseService.loggedInUser.substring(0, FirebaseService.loggedInUser.indexOf('@'));
     String path = '$user-$timestamp.jpg';
 
     addToCollection(user, path);
 
     try {
-      StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('images/$path');
+      final firebaseStorageRef = FirebaseStorage.instance.ref().child('images/$path');
       return firebaseStorageRef.putFile(file);
     } catch (e) {
       return null;
@@ -70,7 +71,7 @@ class PictureService {
   }
 
   static Future<Picture> documentToPicture(DocumentSnapshot document) async {
-    final url = await storage.ref().child('images/' + document.data['path']).getDownloadURL();
-    return Picture.fromJson(document.data, url.toString());
+    final url = await storage.ref().child('images/' + document.get('path')).getDownloadURL();
+    return Picture.fromJson(document.data(), url.toString());
   }
 }

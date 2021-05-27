@@ -128,13 +128,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       children: [
                         Text("Usted tiene", style: TextStyle(fontSize: 20)),
                         totalCredits != null
-                            ? Countup(
-                                begin: 0,
-                                end: totalCredits.toDouble(),
-                                duration: Duration(seconds: 1),
-                                separator: ',',
-                                style: TextStyle(
-                                  fontSize: 45,
+                            ? Material(
+                                elevation: 10,
+                                borderRadius: BorderRadius.circular(30),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Countup(
+                                    begin: 0,
+                                    end: totalCredits.toDouble(),
+                                    duration: Duration(seconds: 1),
+                                    separator: ',',
+                                    style: TextStyle(
+                                      fontSize: 45,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
                                 ),
                               )
                             : Container(

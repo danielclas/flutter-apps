@@ -1,19 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:alarma_robo_app/services/login_service.dart';
-import 'package:camerawesome/models/orientations.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import '../constants.dart';
-import 'package:alert/alert.dart';
 import '../services/tts_service.dart';
 import 'dart:ui';
 import 'package:vibration/vibration.dart';
-import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:torch_compat/torch_compat.dart';
 
 class Home extends StatefulWidget {
@@ -106,21 +98,10 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 ),
                 onPressed: () {
                   setState(() {
-                    if (LoginService.user.clave == passwordController.text) {
-                      this.color = this.color == Colors.grey
-                          ? Colors.red[500]
-                          : Colors.grey;
-                      this.label = this.color == Colors.grey
-                          ? 'Desactivar la alarma'
-                          : 'Activar la alarma';
-                      this.icon = this.color == Colors.grey
-                          ? Icons.alarm_off
-                          : Icons.alarm_add;
-                      Navigator.of(context).pop();
-                    } else {
-                      Alert(message: 'La contraseña ingresada no es correcta')
-                          .show();
-                    }
+                    this.color = this.color == Colors.grey ? Colors.red[500] : Colors.grey;
+                    this.label = this.color == Colors.grey ? 'Desactivar la alarma' : 'Activar la alarma';
+                    this.icon = this.color == Colors.grey ? Icons.alarm_off : Icons.alarm_add;
+                    Navigator.of(context).pop();
                   });
                 },
               ),
@@ -144,7 +125,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
           title: Text("Alarma de robo"),
@@ -160,9 +141,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
           child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                margin: isPortraitMode
-                    ? EdgeInsets.fromLTRB(35, 0, 0, 0)
-                    : EdgeInsets.fromLTRB(0, 40, 0, 0),
+                margin: isPortraitMode ? EdgeInsets.fromLTRB(35, 0, 0, 0) : EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Center(
                   child: Flex(
                     direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
@@ -170,22 +149,18 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Flex(
-                        direction:
-                            isPortraitMode ? Axis.horizontal : Axis.vertical,
+                        direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "Bienvenido, ${LoginService.user.correo.substring(0, LoginService.user.correo.indexOf('@'))}",
-                            style: TextStyle(
-                                fontSize: isPortraitMode ? 15 : 30,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: isPortraitMode ? 15 : 30, color: Colors.white),
                           )
                         ],
                       ),
                       Flex(
-                        direction:
-                            isPortraitMode ? Axis.horizontal : Axis.vertical,
+                        direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -196,8 +171,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
-                                  border: Border.all(
-                                      color: Colors.white70, width: 2),
+                                  border: Border.all(color: Colors.white70, width: 2),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(70),
                                   ),
@@ -206,13 +180,9 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Flex(
-                                      direction: isPortraitMode
-                                          ? Axis.horizontal
-                                          : Axis.vertical,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Icon(
                                           icon,
@@ -236,8 +206,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                         ],
                       ),
                       Flex(
-                        direction:
-                            isPortraitMode ? Axis.horizontal : Axis.vertical,
+                        direction: isPortraitMode ? Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [

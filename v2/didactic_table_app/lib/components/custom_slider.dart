@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../utils/extension_methods.dart';
 
 class CustomSlider extends StatelessWidget {
   final List<Widget> children;
@@ -20,7 +21,7 @@ class CustomSlider extends StatelessWidget {
         reverse: false,
         enlargeCenterPage: true,
         onPageChanged: handler,
-        scrollDirection: Axis.horizontal,
+        scrollDirection: context.height > context.width ? Axis.horizontal : Axis.vertical,
       ),
     );
   }
