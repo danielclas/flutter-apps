@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:users_crud_app/screens/home_screen.dart';
+import 'package:users_crud_app/screens/loading_screen.dart';
 import 'package:users_crud_app/screens/welcome_screen.dart';
 import 'package:users_crud_app/services/firebase_service.dart';
 import 'package:users_crud_app/utils/hex_color.dart';
@@ -25,8 +26,12 @@ class MyApp extends StatelessWidget {
                 labelStyle: TextStyle(color: Colors.white),
                 focusColor: HexColor('e84545'),
                 errorStyle: TextStyle(color: Colors.white, height: 0))),
-        initialRoute: WelcomeScreen.id,
-        routes: {WelcomeScreen.id: (context) => WelcomeScreen(), HomeScreen.id: (context) => HomeScreen()},
+        initialRoute: LoadingScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          HomeScreen.id: (context) => HomeScreen(),
+          LoadingScreen.id: (context) => LoadingScreen()
+        },
         debugShowCheckedModeBanner: false);
   }
 }

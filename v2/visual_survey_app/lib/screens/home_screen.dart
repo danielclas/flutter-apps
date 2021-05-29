@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:visual_survey_app/screens/section_screen.dart';
+import 'package:visual_survey_app/services/pictures_service.dart';
 import 'package:visual_survey_app/utils/hex_color.dart';
 import '../utils/extension_methods.dart';
 
@@ -54,7 +55,10 @@ class SectionBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, SectionScreen.id),
+      onTap: () {
+        PictureService.niceThings = this.label == 'Cosas lindas';
+        Navigator.pushNamed(context, SectionScreen.id);
+      },
       child: Material(
         elevation: 10,
         child: Container(

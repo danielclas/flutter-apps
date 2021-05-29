@@ -13,8 +13,9 @@ class _VotingComponentState extends State<VotingComponent> {
   List<Widget> tiles = [];
 
   Future<void> getPictures() async {
-    await PictureService.getAllPictures();
-    setState(() => tiles = PictureService.pictures.map((e) => VotingCard(e)).toList());
+    final pictures = PictureService.getAllPictures()
+        .where((e) => (PictureService.niceThings && e.isNice) || (!PictureService.niceThings && !e.isNice));
+    setState(() => tiles = pictures.map((e) => VotingCard(e)).toList());
   }
 
   @override
@@ -33,9 +34,13 @@ class _VotingComponentState extends State<VotingComponent> {
     return Container(
         child: Padding(
       padding: const EdgeInsets.all(12.0),
-      child: ListView(
-        children: tiles,
-      ),
+      child: tiles.length > 0
+          ? ListView(
+              children: tiles,
+            )
+          : Center(
+              child: Text('No hay imagenes para mostrar'),
+            ),
     ));
   }
 }

@@ -12,15 +12,15 @@ class SquaredButton extends StatelessWidget {
     return Material(
         elevation: 5,
         borderRadius: BorderRadius.all(Radius.circular(30)),
-        color: handler == null ? Colors.grey : Colors.white,
+        color: handler == null ? Colors.grey : Colors.transparent,
         child: GestureDetector(
           onTap: handler,
           child: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   border: Border.all(width: 2.percentOf(context.width), color: HexColor("ededd0"))),
-              height: 15.percentOf(context.height),
-              width: 30.percentOf(context.width),
+              height: 12.percentOf(context.height),
+              width: 25.percentOf(context.width),
               child: Center(child: child)),
         ));
   }

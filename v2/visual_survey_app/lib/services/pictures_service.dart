@@ -1,77 +1,72 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:visual_survey_app/models/picture.dart';
 import 'package:visual_survey_app/services/firebase_service.dart';
 
 class PictureService {
-  static FirebaseStorage storage;
-  static String storageBucket = "gs://pps-apps-b0fb3.appspot.com";
   static List<Picture> pictures = [];
-  static String basePath = 'gs://pps-apps-b0fb3.appspot.com/images/';
+  static String path = '';
+  static bool niceThings = true;
 
-  static void initService() async {
-    if (storage == null)
-      storage = FirebaseFirestore.instanceFor(app: FirebaseService.instance) as FirebaseStorage;
+  static init() async {
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    String newPath = join(documentDirectory.path, 'collections.txt');
+
+    final file = File(newPath);
+    final exists = await file.exists();
+    if (!exists) {
+      file.writeAsString('[]');
+    }
+
+    path = newPath;
   }
 
-  static uploadPicture(File file) {
-    initService();
-
+  static uploadPicture(File file) async {
     String timestamp = DateTime.now().second.toString();
-    String user = FirebaseService.loggedInUser.substring(0, FirebaseService.loggedInUser.indexOf('@'));
+    String user = FirebaseService.shortUser;
     String path = '$user-$timestamp.jpg';
+    Directory documentDirectory = await getApplicationDocumentsDirectory();
+    String newPath = join(documentDirectory.path, path);
 
-    addToCollection(user, path);
+    file.copySync(newPath);
+    addToCollection(user, newPath);
+  }
 
-    try {
-      final firebaseStorageRef = FirebaseStorage.instance.ref().child('images/$path');
-      return firebaseStorageRef.putFile(file);
-    } catch (e) {
-      return null;
+  static votePicture(Picture picture, bool like) {
+    final pictures = getAllPictures();
+    for (int i = 0; i < pictures.length; i++) {
+      final p = pictures[i];
+      if (p.path == picture.path) {
+        if (like)
+          p.likes++;
+        else
+          p.dislikes++;
+        p.usersVoted.add(FirebaseService.shortUser);
+      }
     }
+
+    File(path).writeAsString(jsonEncode(pictures));
   }
 
-  static Future<void> votePicture(String user, String path, bool like) async {
-    final result =
-        await FirebaseService.firestore.collection('images').where('path', isEqualTo: path).getDocuments();
+  static addToCollection(String user, String filePath) {
+    final picture = Picture(0, 0, filePath, []);
+    final pictures = jsonDecode(File(path).readAsStringSync());
 
-    if (result != null) {
-      final doc = result.documents[0];
-      final arr = doc.data['usersVoted'] ?? [];
-      int likes = doc.data['likes'] ?? 0;
-      int dislikes = doc.data['dislikes'] ?? 0;
+    pictures.add(picture);
+    File(path).writeAsString(jsonEncode(pictures));
+  }
 
-      arr.add(user);
+  static List<Picture> getAllPictures() {
+    final list = jsonDecode(File(path).readAsStringSync());
+    final List<Picture> pictures = [];
 
-      await FirebaseService.firestore.collection('images').document(doc.documentID).setData({
-        'likes': like ? ++likes : likes,
-        'dislikes': !like ? ++dislikes : dislikes,
-        'usersVoted': arr,
-      });
+    for (var i = 0; i < list.length; i++) {
+      pictures.add(Picture.fromJson(list[i]));
     }
-  }
-
-  static Future<void> addToCollection(String user, String path) async {
-    await FirebaseService.firestore
-        .collection('images')
-        .add({'dislikes': 0, 'likes': 0, 'path': path, 'usersVoted': [], 'date': DateTime.now()});
-  }
-
-  static Future<void> getAllPictures() async {
-    initService();
-    final result = await FirebaseService.firestore.collection('images').getDocuments();
-
-    pictures = [];
-
-    result.documents.forEach((element) async {
-      final p = await documentToPicture(element);
-      pictures.add(p);
-    });
-  }
-
-  static Future<Picture> documentToPicture(DocumentSnapshot document) async {
-    final url = await storage.ref().child('images/' + document.get('path')).getDownloadURL();
-    return Picture.fromJson(document.data(), url.toString());
+    print(pictures);
+    return pictures;
   }
 }

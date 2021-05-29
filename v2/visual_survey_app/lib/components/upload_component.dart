@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:visual_survey_app/components/rectangle_button.dart';
 import 'package:visual_survey_app/services/pictures_service.dart';
 import 'package:visual_survey_app/utils/hex_color.dart';
+
 import '../utils/extension_methods.dart';
 
 class UploadComponent extends StatefulWidget {
@@ -20,20 +20,25 @@ class _UploadComponentState extends State<UploadComponent> {
   File imageFile;
   bool showSpinner = false;
   ImagePicker picker = ImagePicker();
-  UploadTask task;
   Image image;
+
+  final Widget spinner = CircularProgressIndicator(
+    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+    strokeWidth: 2,
+  );
 
   Future<void> pickImage(ImageSource source) async {
     final selected = await picker.getImage(source: source, imageQuality: 0);
 
     setState(() {
       showSpinner = true;
-    });
-
-    setState(() {
-      showSpinner = false;
       imageFile = File(selected.path);
       image = Image.file(imageFile);
+      Timer(Duration(seconds: 3), () {
+        setState(() {
+          showSpinner = false;
+        });
+      });
     });
   }
 
@@ -42,13 +47,22 @@ class _UploadComponentState extends State<UploadComponent> {
       image = null;
       imageFile = null;
       showSpinner = false;
-      task = null;
     });
   }
 
   void upload() async {
     setState(() {
-      task = PictureService.uploadPicture(imageFile);
+      showSpinner = true;
+      PictureService.uploadPicture(imageFile);
+      imageFile = null;
+      image = null;
+      Timer(Duration(seconds: 3), () {
+        setState(() {
+          showSpinner = false;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Su foto fue subida correctamente')));
+        });
+      });
     });
   }
 
@@ -71,17 +85,20 @@ class _UploadComponentState extends State<UploadComponent> {
               pickImage(ImageSource.camera);
             },
             child: Container(
-              child: image == null
+              child: showSpinner
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: showSpinner
-                          ? [Text('...')]
-                          : [
-                              Icon(Icons.camera),
-                              Text("Presiona para tomar una foto"),
-                            ],
+                      children: [spinner],
                     )
-                  : image,
+                  : image != null
+                      ? image
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.camera),
+                            Text("Presiona para tomar una foto"),
+                          ],
+                        ),
               height: 280,
               width: 280,
               decoration: BoxDecoration(
@@ -90,22 +107,7 @@ class _UploadComponentState extends State<UploadComponent> {
               ),
             ),
           ),
-          Container(
-            child: task == null
-                ? null
-                : StreamBuilder<TaskSnapshot>(
-                    stream: task.snapshotEvents,
-                    builder: (context, snapshot) {
-                      task.whenComplete(() => notifyTaskComplete());
-
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [FadingText('Cargando...')],
-                      );
-                    },
-                  ),
-          ),
+          Container(child: null),
           Container(
             child: SizedBox(
               width: double.infinity,

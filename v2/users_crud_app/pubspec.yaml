@@ -26,7 +26,7 @@ dependencies:
   page_transition: ^1.1.7+6
   barcode_scan: 1.0.0
   animated_background: ^1.0.5
-
+  splashscreen:
 
 dev_dependencies:
   flutter_test:

@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image(
-                  height: 37.percentOf(context.height),
+                  height: 30.percentOf(context.height),
                   width: 80.percentOf(context.width),
                   image: Svg('images/graphic.svg')),
               Container(
@@ -123,24 +123,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                   Container(
                     color: Colors.transparent,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
+                    padding: EdgeInsets.all(25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text("Usted tiene", style: TextStyle(fontSize: 20)),
                         totalCredits != null
-                            ? Material(
-                                elevation: 10,
-                                borderRadius: BorderRadius.circular(30),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Countup(
-                                    begin: 0,
-                                    end: totalCredits.toDouble(),
-                                    duration: Duration(seconds: 1),
-                                    separator: ',',
-                                    style: TextStyle(
-                                      fontSize: 45,
-                                      fontWeight: FontWeight.w700,
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+                                child: Material(
+                                  elevation: 20,
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: HexColor('a6d6d6'),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Countup(
+                                      begin: 0,
+                                      end: totalCredits.toDouble(),
+                                      duration: Duration(seconds: 1),
+                                      separator: ',',
+                                      style: TextStyle(
+                                        fontSize: 80,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -167,12 +172,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       handler: totalCredits != null ? putCreditHandler : null,
                       child: Icon(
                         Icons.add_circle_outline,
-                        size: 12.percentOf(context.width),
+                        size: 10.percentOf(context.width),
                       ),
                     ),
                     SquaredButton(
                       handler: totalCredits != null ? clearCreditHandler : null,
-                      child: Icon(Icons.delete, size: 12.percentOf(context.width)),
+                      child: Icon(Icons.delete, size: 10.percentOf(context.width)),
                     ),
                   ],
                 ),

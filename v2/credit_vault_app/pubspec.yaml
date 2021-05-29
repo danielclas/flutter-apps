@@ -31,6 +31,7 @@ dependencies:
   countup: ^0.1.2
   animated_background: ^1.0.5
   geopattern_flutter: ^0.1.1
+  splashscreen:
 
 dev_dependencies:
   flutter_test:

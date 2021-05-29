@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:visual_survey_app/components/rectangle_button.dart';
@@ -8,6 +8,7 @@ import 'package:visual_survey_app/screens/home_screen.dart';
 import 'package:visual_survey_app/services/firebase_service.dart';
 import 'package:visual_survey_app/utils/constants.dart';
 import 'package:visual_survey_app/utils/hex_color.dart';
+
 import '../utils/extension_methods.dart';
 
 class LoginRegisterComponent extends StatefulWidget {

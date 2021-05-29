@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:visual_survey_app/components/upload_component.dart';
 import 'package:visual_survey_app/components/voting_component.dart';
+import 'package:visual_survey_app/services/pictures_service.dart';
 import 'package:visual_survey_app/utils/hex_color.dart';
 
 class SectionScreen extends StatefulWidget {
@@ -18,7 +19,8 @@ class _SectionScreenState extends State<SectionScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: HexColor('323232'),
-        title: Text('Relevamiento visual'),
+        title: Text('${PictureService.niceThings ? 'Cosas lindas' : 'Cosas feas'}'),
+        centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => setState(() => bottomNavBarIndex = index),

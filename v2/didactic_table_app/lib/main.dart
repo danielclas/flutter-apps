@@ -1,4 +1,5 @@
 import 'package:didactic_table_app/screens/home_screen.dart';
+import 'package:didactic_table_app/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/welcome_screen.dart';
@@ -14,8 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        initialRoute: WelcomeScreen.id,
-        routes: {WelcomeScreen.id: (context) => WelcomeScreen(), HomeScreen.id: (context) => HomeScreen()},
+        initialRoute: LoadingScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          HomeScreen.id: (context) => HomeScreen(),
+          LoadingScreen.id: (context) => LoadingScreen()
+        },
         debugShowCheckedModeBanner: false);
   }
 }

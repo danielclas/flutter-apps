@@ -1,15 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseService {
   static FirebaseService _instance = FirebaseService._constructor();
-  static String currentUser = 'admin@admin.com';
+  static String currentUser = '';
 
   static get auth => FirebaseAuth.instance;
-  static get firestore => FirebaseFirestore.instance;
   static get instance => _instance;
-  static String get loggedInUser => currentUser;
+  static String get loggedInUser => auth.currentUser;
+  static String get shortUser => currentUser.substring(0, currentUser.indexOf('@'));
 
   FirebaseService._constructor();
 
